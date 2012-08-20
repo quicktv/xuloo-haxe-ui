@@ -22,7 +22,6 @@ SOFTWARE.
 
 package xuloo.ui;
 
-import js.Event;
 import minject.Injector;
 
 #if flash
@@ -196,7 +195,7 @@ class UIComponent
 	
 	var _plugins:Hash<UIComponentPlugin>;
 	
-	var _actions:Hash<Action>;
+	var _actions:Hash<ActionList>;
 
 	/**
 	Signal used for dispatching view events
@@ -316,7 +315,7 @@ class UIComponent
 	
 	public function triggerActions(event:String):Void {
 		if (_actions.exists(event)) {
-			for (action in _actions) {
+			for (action in _actions.get(event).actions) {
 				action.execute();
 			}
 		}
@@ -451,7 +450,7 @@ class UIComponent
 
 class ActionList {
 	
-	public var event(default, never):String;
+	public var event(default, default):String;
 	public var actions(getActions, never):Array<Action>;
 	
 	var _actions:Array<Action>;
