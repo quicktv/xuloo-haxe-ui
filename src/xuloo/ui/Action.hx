@@ -7,6 +7,7 @@ package xuloo.ui;
 
 class Action 
 {
+	public var instanceName(default, default):String;
 	public var event(default, default):String;
 	
 	public function new() {

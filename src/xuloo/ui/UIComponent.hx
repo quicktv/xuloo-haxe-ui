@@ -102,7 +102,7 @@ class UIComponent
 	public var alpha(getAlpha, setAlpha):Float;
 	public var visible(getVisible, setVisible):Bool;
 	public var active(getActive, setActive):Bool;
-	public var playheadTime(default, default):Int;
+	public var includeInLayout(default, default):Bool;
 	
 	var _x:Float;
 	public function getX():Float {

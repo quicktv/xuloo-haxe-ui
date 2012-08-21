@@ -12,6 +12,13 @@ import js.Lib;
 
 class KalturaVideo extends UIComponent
 {
+	public var source(never, setSource):Dynamic;
+	
+	var _source:Dynamic;
+	public function setSource(value:Dynamic):Dynamic {
+		return _source = value;
+	}
+	
 	var elementRewritten:Bool;
 	
 	public function new() {
