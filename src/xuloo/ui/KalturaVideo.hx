@@ -12,11 +12,33 @@ import js.Lib;
 
 class KalturaVideo extends UIComponent
 {
+	public var video(default, default):HtmlDom;
+
 	public var source(never, setSource):Dynamic;
 	
 	var _source:Dynamic;
 	public function setSource(value:Dynamic):Dynamic {
 		return _source = value;
+	}
+	
+	public override function setHeight(value:Float):Float {
+		super.setHeight(value);
+		
+		#if js
+		video.setAttribute("height", Std.string(value));
+		#end
+		
+		return _height;
+	}
+	
+	public override function setWidth(value:Float):Float {
+		super.setWidth(value);
+		
+		#if js
+		video.setAttribute("width", Std.string(value));
+		#end
+		
+		return _width;
 	}
 	
 	var elementRewritten:Bool;
@@ -43,10 +65,8 @@ class KalturaVideo extends UIComponent
 		super.initialize();
 		
 		if (tagName == null) tagName = "video";
-		var video = js.Lib.document.createElement("video");
+		video = js.Lib.document.createElement("video");
 		
-		video.setAttribute("width", "480");
-		video.setAttribute("height", "267");
 		video.setAttribute("poster", "http://cdn.kaltura.org/apis/html5lib/kplayer-examples/media/bbb480.jpg");
 		video.setAttribute("durationHint", "33");
 		

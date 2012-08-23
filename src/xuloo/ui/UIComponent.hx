@@ -121,13 +121,11 @@ class UIComponent
 		return _y;
 	}
 	public function setY(value:Float):Float {
-		if (parent != null) {
-			_y = value - parent.height;
-		}
 		_y = value;
 		#if js
 		element.style.top = Std.string(_y) + "px";
 		#end
+		_dirty = true;
 		return _y;
 	}
 	
@@ -307,17 +305,29 @@ class UIComponent
 			_actions.set(action.event, new ActionList(action.event));
 		}
 		_actions.get(action.event).addAction(action);
+		
+		switch (action.event) {
+			case "click":
+				Console.log("adding click operation");
+				#if js
+				element.onclick = handleEvent; 
+				#end
+		}
 	}
 	
 	public function handleEvent(e:Event):Void {
+		Console.log("handling event " + e.type);
 		triggerActions(e.type);
 	}
 	
 	public function triggerActions(event:String):Void {
 		if (_actions.exists(event)) {
 			for (action in _actions.get(event).actions) {
+				Console.log("executing " + action);
 				action.execute();
 			}
+		} else {
+			Console.log("there are no actions for event type '" + event + "'");
 		}
 	}
 
@@ -340,10 +350,32 @@ class UIComponent
 		sprite.addChild(view.sprite);
 		#elseif js
 		//x -= parent.width;
+		Console.log(view + " parent is " + view.parent + " " + (view.parent == this));
 		element.appendChild(view.element);
 		#end
 
 		dispatch(ADDED, view);
+	}
+	
+	public function getChildByName(name:String, ?recurse:Bool = false):UIComponent {
+		
+		for (child in children) {
+			Console.log("checking '" + child.instanceName + "' against '" + name + "'");
+			if (child.instanceName == name) {
+				return child;
+			}
+		}
+		
+		if (recurse) {
+			for (child in children) {
+				var result:UIComponent = child.getChildByName(name, true);
+				if (result != null) {
+					return result;
+				}
+			}
+		}
+		
+		return null;
 	}
 
 
@@ -415,12 +447,15 @@ class UIComponent
 	Updates platform specific properties and state
 	*/
 	public function render():Void {
-		//Console.log("X = " + _x);
-		element.style.left = Std.string((parent != null) ? _x - parent.height : _x) + "px";
+		
+		//
 		
 		if (_dirty) {
 			_dirty = false;
-			
+			if (parent != null) {
+				Console.log(this + " X = " + _x + " parent.height = " + parent.height);
+				element.style.top = Std.string((parent != null) ? _x - parent.height : _x) + "px";
+			}
 			//#if js
 			//element.
 			//#end

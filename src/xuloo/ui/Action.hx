@@ -1,5 +1,7 @@
 package xuloo.ui;
 
+import Main;
+
 /**
  * ...
  * @author Trevor B
@@ -7,6 +9,7 @@ package xuloo.ui;
 
 class Action 
 {
+	public var interactiveLayer(default, default):InteractiveLayer;
 	public var instanceName(default, default):String;
 	public var event(default, default):String;
 	
