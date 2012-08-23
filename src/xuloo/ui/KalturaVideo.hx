@@ -73,20 +73,24 @@ class KalturaVideo extends UIComponent
 		var script = Lib.document.createElement("script");
 		script.setAttribute("type", "text/javascript");
 		script.setAttribute("src", "http://html5.kaltura.org/js");
-		Lib.document.body.appendChild(script);
+		//Lib.document.body.appendChild(script);
+		
+		//var source = Lib.document.createElement("source");
+		//source.setAttribute("type", "video/webm");
+		//source.setAttribute("src", "http://cdn.kaltura.org/apis/html5lib/kplayer-examples/media/bbb_trailer_360p.webm?a"); 
+		//video.appendChild(source);
 		
 		var source = Lib.document.createElement("source");
-		source.setAttribute("type", "video/webm");
-		source.setAttribute("src", "http://cdn.kaltura.org/apis/html5lib/kplayer-examples/media/bbb_trailer_360p.webm?a"); 
+		source.setAttribute("src", "http://cdnakmi.kaltura.com/p/616252/sp/61625200/flvclipper/entry_id/1_xthjrdmc/flavor/1_nxcfb29l"); 
 		video.appendChild(source);
 		
-		source = Lib.document.createElement("source");
-		source.setAttribute("src", "http://cdn.kaltura.org/apis/html5lib/kplayer-examples/media/bbb_trailer_iphone270P.m4v"); 
-		video.appendChild(source);
+		//source = Lib.document.createElement("source");
+		//source.setAttribute("src", "http://cdn.kaltura.org/apis/html5lib/kplayer-examples/media/bbb_trailer_iphone270P.m4v"); 
+		//video.appendChild(source);
 		
-		source = Lib.document.createElement("source");
-		source.setAttribute("src", "http://cdn.kaltura.org/apis/html5lib/kplayer-examples/media/bbb_trailer_400p.ogv"); 
-		video.appendChild(source);
+		//source = Lib.document.createElement("source");
+		//source.setAttribute("src", "http://cdn.kaltura.org/apis/html5lib/kplayer-examples/media/bbb_trailer_400p.ogv"); 
+		//video.appendChild(source);
 		
 		element.appendChild(video);
 		
