@@ -306,6 +306,8 @@ class UIComponent
 		}
 		_actions.get(action.event).addAction(action);
 		
+		Console.log("adding " + action.event + " operation");
+		
 		switch (action.event) {
 			case "click":
 				Console.log("adding click operation");
