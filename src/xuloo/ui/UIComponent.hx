@@ -26,6 +26,7 @@ import minject.Injector;
 
 #if flash
 import flash.display.Sprite;
+import flash.events.Event;
 #elseif js
 import js.JQuery;
 import js.Lib;
