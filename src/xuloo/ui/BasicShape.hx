@@ -1,10 +1,10 @@
 package xuloo.ui;
 
-import flash.display.BlendMode;
-import flash.display.Graphics;
-import flash.display.Sprite;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import nme.display.BlendMode;
+import nme.display.Graphics;
+import nme.display.Sprite;
+import nme.geom.Point;
+import nme.geom.Rectangle;
 
 class BasicShape extends UIComponent
 {
@@ -19,45 +19,50 @@ class BasicShape extends UIComponent
 	
 	public var borderSprite(getBorderSprite, never):Sprite;
 	
-	var _borderSprite:Sprite = new Sprite();
+	var _borderSprite:Sprite;
 	public function getBorderSprite():Sprite {
 		return _borderSprite;
 	}
 	
 	public var innerBorderSprite(getInnerBorderSprite, never):Sprite;
 	
-	var _innerBorderSprite:Sprite = new Sprite();
+	var _innerBorderSprite:Sprite;
 	public function getInnerBorderSprite():Sprite {
 		return _innerBorderSprite;
 	}
 	
-	var _w:Float = 0.0;	
-	public override function setWidth(value:Float):Void {
+	var _w:Float;	
+	public function setWidth(value:Float):Float {
 		super.width = _w =  value;
 
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
 		drawBorderSprite();
+		
+		return _w;
 	}
 	
-	var _h:Float = 0.0;	
-	public override function setHeight(value:Float):Void {
+	var _h:Float;	
+	public function setHeight(value:Float):Float {
 		super.height = _h =  value;
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
 		drawBorderSprite();
+		return _h;
 	}
 	
 	public var backgroundColour(getBackgroundColour, setBackgroundColour):Int;
 			
-	var _backgroundColour:Int = 0xffffff;	
+	var _backgroundColour:Int;	
 	public function getBackgroundColour():Int {
 		return _backgroundColour;
 	}	
-	public function setBackgroundColour(value:Int):Void {
+	public function setBackgroundColour(value:Int):Int {
 		_backgroundColour = value;		
 		
 		drawBackgroundSprite();
+		
+		return _backgroundColour;
 	}
 	
 	public var backgroundOpacity(getBackgroundOpacity, setBackgroundOpacity):Float;
@@ -66,9 +71,11 @@ class BasicShape extends UIComponent
 	public function getBackgroundOpacity():Float {
 		return _backgroundOpacity;
 	}	
-	public function setBackgroundOpacity(value:Float):Void {
+	public function setBackgroundOpacity(value:Float):Float {
 		_backgroundOpacity = value;
-		_backgroundSprite.alpha = value;			
+		_backgroundSprite.alpha = value;	
+		
+		return _backgroundOpacity;
 	}
 	
 	public var borderColour(getBorderColour, setBorderColour):Int;
@@ -77,11 +84,13 @@ class BasicShape extends UIComponent
 	public function getBorderColour():Int {
 		return _borderColour;
 	}	
-	public function setBorderColour(value:Int):Void {
+	public function setBorderColour(value:Int):Int {
 		_borderColour = value;	
 		
 		drawInnerBorderSprite();
 		drawBorderSprite();
+		
+		return _borderColour;
 	}
 	
 	public var borderThickness(getBorderThickness, setBorderThickness):Float;
@@ -90,10 +99,11 @@ class BasicShape extends UIComponent
 	public function getBorderThickness():Float {
 		return _borderThickness;
 	}
-	public function setBorderThickness(value:Float):Void {
+	public function setBorderThickness(value:Float):Float {
 		_borderThickness = value;
 		//drawBorderSprite()	
 		drawInnerBorderSprite();
+		return _borderThickness;
 	}
 	
 	public var borderOpacity(getBorderOpacity, setBorderOpacity):Float;
@@ -102,10 +112,10 @@ class BasicShape extends UIComponent
 	public function getBorderOpacity():Float {
 		return _borderOpacity;
 	}
-	public function setBorderOpacity(value:Float):Void {
+	public function setBorderOpacity(value:Float):Float {
 		_borderOpacity = value;
-		
-		_borderSprite.alpha = value;		
+		_borderSprite.alpha = value;
+		return _borderOpacity;
 	}
 	
 	public var shape(getShape, setShape):String;
@@ -114,42 +124,43 @@ class BasicShape extends UIComponent
 	public function getShape():String {
 		return _shape;
 	}
-	public function setShape(value:String):Void {
+	public function setShape(value:String):String {
 		_shape = value;
 		
 		switch (_shape)
 		{
 			case "Circle":
 				_renderer = new EllipseRenderer();
-				break;
 			
 			case "Rectangle":
 				_renderer = new RectangleRenderer();
-				break;
 			
 			case "Speech Bubble":
 				_renderer = new SpeechBubbleRenderer(5, new Point());
-				break;
 			
-			default:
-				throw new Error("There is no renderer for shape '" + _shape + "'");
+			//default:
+				//throw new Error("There is no renderer for shape '" + _shape + "'");
 		}
 		
 		drawBackgroundSprite();
 		drawBorderSprite();
 		drawInnerBorderSprite();
-		//_borderSprite.alpha = value			
+		//_borderSprite.alpha = value	
+		
+		return _shape;
 	}
 	
 	public var cornerRadius(never, setCornerRadius):Float;
 	
-	public function setCornerRadius(value:Float):Void {
+	public function setCornerRadius(value:Float):Float {
 		_renderer = new SpeechBubbleRenderer(value, new Point());
 		
 		render();
+		
+		return value;
 	}
 	
-	private function render():Void {		
+	override function render():Void {		
 		drawBackgroundSprite();
 		drawBorderSprite();
 		drawInnerBorderSprite();
@@ -166,7 +177,11 @@ class BasicShape extends UIComponent
 		width = 200;
 		height = 100;
 		
+		_backgroundColour = 0xffffff;
+		
+		_borderSprite = new Sprite();
 		_backgroundSprite = new Sprite();
+		_innerBorderSprite = new Sprite();
 		
 		_borderSprite.blendMode = BlendMode.LAYER;
 		_innerBorderSprite.blendMode = BlendMode.ERASE;			
@@ -186,9 +201,8 @@ class BasicShape extends UIComponent
 		var surface:Graphics = _backgroundSprite.graphics;
 		
 		surface.clear();
-		surface.beginFill(_backgroundColour);
-		
-		if (!isNaN(_w) && _w > 0 && !isNaN(_h) && _h > 0) {
+
+		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
 		}
 		
@@ -201,7 +215,7 @@ class BasicShape extends UIComponent
 		surface.clear();
 		surface.beginFill(_borderColour);
 		
-		if (!isNaN(_w) && _w > 0 && !isNaN(_h) && _h > 0) {
+		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
 		}
 		
@@ -214,7 +228,7 @@ class BasicShape extends UIComponent
 		surface.clear();
 		surface.beginFill(0xff0000);
 		
-		if (!isNaN(_w) && _w > 0 && !isNaN(_h) && _h > 0)
+		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0)
 		{
 			_renderer.render(surface, new Rectangle(_borderThickness/2, _borderThickness/2, width - (_borderThickness), height - (_borderThickness)));
 		}

@@ -1,8 +1,5 @@
 package xuloo.ui;
 	
-import qtv.utils.FlashVars;
-import qtv.utils.Properties;
-
 class Versions implements IVersions
 {	
 	public static var QTV_PLAY_WEBAPP_VERSION:String = "qtvPlayWebappVersion";
@@ -18,7 +15,7 @@ class Versions implements IVersions
 		
 		if (Std.is(arg, FlashVars))
 		{
-			var flashVars:FlashVars = FlashVars(arg);
+			var flashVars:FlashVars = cast(arg, FlashVars);
 			_versions.set(QTV_PLAY_WEBAPP_VERSION, flashVars.getOrElse(QTV_PLAY_WEBAPP_VERSION, "No version defined for '" + QTV_PLAY_WEBAPP_VERSION + "'"));
 			_versions.set(QTV_WEBAPP_CLIENT_VERSION, flashVars.getOrElse(QTV_WEBAPP_CLIENT_VERSION, "No version defined for '" + QTV_WEBAPP_CLIENT_VERSION + "'"));
 			_versions.set(QTV_FLEX_CORE_VERSION, flashVars.getOrElse(QTV_FLEX_CORE_VERSION, "No version defined for '" + QTV_FLEX_CORE_VERSION + "'"));
@@ -26,7 +23,7 @@ class Versions implements IVersions
 		}
 		else if (Std.is(arg, Properties))
 		{
-			var properties:Properties = Properties(arg);
+			var properties:Properties = cast(arg, Properties);
 			_versions.set(QTV_PLAY_WEBAPP_VERSION, properties.getStringProperty("play.webapp.version"));
 			_versions.set(QTV_WEBAPP_CLIENT_VERSION, properties.getStringProperty("webapp.client.version"));
 			_versions.set(QTV_FLEX_CORE_VERSION, properties.getStringProperty("flex.core.version"));
@@ -34,12 +31,12 @@ class Versions implements IVersions
 		}
 	}
 	
-	public function getValue(key:String):String
+	public function getValue(key:String):IOption<String>
 	{
 		if (_versions.exists(key)) {
-			return _versions.get(key);
+			return new Something<String>(_versions.get(key));
 		}
 		
-		throw new Error("There is no version defined for the key '" + key + "'");
+		return new Nothing<String>();
 	}
 }

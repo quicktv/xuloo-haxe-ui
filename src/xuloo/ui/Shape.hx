@@ -10,7 +10,7 @@ import org.as3commons.logging.api.GetLogger;
 import qtv.api.core.Constants;
 import qtv.impl.component.display.DisplayComponent;
 
-class BasicShape extends DisplayComponent {
+class BasicShape extends UIComponent {
 	public var backgroundSprite(getBackgroundSprite, never) : Sprite;
 	public var borderSprite(getBorderSprite, never) : Sprite;
 	public var innerBorderSprite(getInnerBorderSprite, never) : Sprite;

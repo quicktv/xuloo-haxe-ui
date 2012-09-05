@@ -6,6 +6,7 @@ import qtv.api.VideoModel;
 interface IVideoPlayer implements IVideoController
 {
 	var ready(getReady, never):Signal0;
+	var isReady(getIsReady, never):Bool;
 	var complete(getComplete, never):Signal0;
 	var stateChanged(getStateChanged, never):Signal1<PlayerState>;
 	var currentState(getCurrentState, never):PlayerState;
@@ -17,7 +18,7 @@ interface IVideoPlayer implements IVideoController
 	var onStop(getOnStop, never):Signal0;
 	
 	function getReady():Signal0;
-	function isReady():Bool;	
+	function getIsReady():Bool;	
 	function getComplete():Signal0;	
 	function getStateChanged():Signal1<PlayerState>;	
 	function getCurrentState():PlayerState;	

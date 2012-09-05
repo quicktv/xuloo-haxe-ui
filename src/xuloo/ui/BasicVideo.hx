@@ -2,16 +2,15 @@ package xuloo.ui;
 
 import xuloo.ui.IVideoPlayer;
 
+#if flash
 import flash.display.DisplayObject;
 import flash.display.Loader;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.net.URLRequest;
+#end
 
 import qtv.api.VideoModel;
-
-import xuloo.ui.BasicShape;
-import xuloo.ui.Versions;
 
 class BasicVideo extends BasicShape {
 	public var player(getPlayer, never) : IVideoPlayer;
@@ -19,27 +18,23 @@ class BasicVideo extends BasicShape {
 
 	var _loader : Loader;
 	
-	#if flash
 	var _player : IVideoPlayer;
 	public function getPlayer() : IVideoPlayer {
 		return _player;
 	}
-	#elseif js
-	
-	#end
 
 	var _aspectRatio : Float;
 	
 	var _video : VideoModel;
 	
 	override public function setWidth(value : Float) : Float {
-		super.width = value;
+		super.setWidth(value);
 		updateVideoDimensions();
 		return value;
 	}
 
 	override public function setHeight(value : Float) : Float {
-		super.height = value;
+		super.setHeight(value);
 		updateVideoDimensions();
 		return value;
 	}
@@ -68,7 +63,7 @@ class BasicVideo extends BasicShape {
 	public function setSource(value : Dynamic) : Dynamic {
 		
 		#if flash
-			if(_player)  {
+			if(_player != null)  {
 				removeChild(cast(_player, DisplayObject));
 			}
 			_source = value;
@@ -95,8 +90,10 @@ class BasicVideo extends BasicShape {
 	#if flash
 	function onLoadComplete(e : Event) : Void {
 		try {
-			var clazz : Class<Dynamic> = cast((_loader.contentLoaderInfo.applicationDomain.getDefinition("qtv.ivp.player.VideoPlayer")), Class);
-			_player = cast(new Clazz(), IVideoPlayer);
+			_player = cast(Type.createInstance(Type.resolveClass("qtv.ivp.player.VideoPlayer"),[]), IVideoPlayer);
+			//_loader.contentLoaderInfo.applicationDomain.getDefinition("qtv.ivp.player.VideoPlayer");
+			//var clazz : Class<Dynamic> = cast((), Class);
+			//_player = cast(new Clazz(), IVideoPlayer);
 			addChildAt(cast(_player, DisplayObject), 1);
 			_player.video = _source;
 			_player.init();
@@ -109,7 +106,7 @@ class BasicVideo extends BasicShape {
 			}
 
 		}
-		catch(err : Error){ };
+		catch(msg : String){ };
 	}
 
 	function onPlayerReady() : Void {
@@ -125,7 +122,7 @@ class BasicVideo extends BasicShape {
 
 	function updateVideoDimensions() : Void {
 
-		if(_player)  {
+		if(_player != null)  {
 			var videoDisplay : DisplayObject = cast(_player, DisplayObject);
 			var myAspect : Float = _w / _h;
 			var playerWidth : Float = 0.0;
@@ -151,15 +148,15 @@ class BasicVideo extends BasicShape {
 	// VIDEO PLAYER IMPLEMENTATION                                       //
 	///////////////////////////////////////////////////////////////////////
 	public function play() : Void {
-		if(_player) _player.play();
+		if(_player != null) _player.play();
 	}
 
 	public function pause() : Void {
-		if(_player) _player.pause();
+		if(_player != null) _player.pause();
 	}
 
 	public function seek(value : Int) : Void {
-		if(_player) _player.playheadTime = value;
+		if(_player != null) _player.playheadTime = value;
 	}
 
 }

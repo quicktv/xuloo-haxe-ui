@@ -1,9 +1,9 @@
 package xuloo.ui;
 
-import flash.display.Graphics;
-import flash.geom.Rectangle;
+import nme.display.Graphics;
+import nme.geom.Rectangle;
 
-public class RectangleRenderer implements IShapeRenderer
+class RectangleRenderer implements IShapeRenderer
 {
 	public function new() {
 	}

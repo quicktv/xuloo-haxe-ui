@@ -1,8 +1,8 @@
 package xuloo.ui;
 
-import flash.display.Graphics;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import nme.display.Graphics;
+import nme.geom.Point;
+import nme.geom.Rectangle;
 
 class SpeechBubbleRenderer implements IShapeRenderer {
 	
@@ -19,33 +19,33 @@ class SpeechBubbleRenderer implements IShapeRenderer {
 		drawBubble(surface, rect, cornerRadius, point);
 	}
 	
-	public function drawBubble(surface:Graphics, rect:Rectangle, cornerRadius:Number, point:Point):Void {
-		var rad:Number = cornerRadius;
-		var x:Number = rect.x;
-		var y:Number = rect.y;
-		var w:Number = rect.width;
-		var h:Number = rect.height;
-		var px:Number = point.x;
-		var py:Number = point.y;
-		var min_gap:Number = 20;
-		var hgap:Number = Math.min(w - rad - rad, Math.max(min_gap, w / 5));
-		var left:Number = px <= x + w / 2 ? 
+	public function drawBubble(surface:Graphics, rect:Rectangle, cornerRadius:Float, point:Point):Void {
+		var rad:Float = cornerRadius;
+		var x:Float = rect.x;
+		var y:Float = rect.y;
+		var w:Float = rect.width;
+		var h:Float = rect.height;
+		var px:Float = point.x;
+		var py:Float = point.y;
+		var min_gap:Float = 20;
+		var hgap:Float = Math.min(w - rad - rad, Math.max(min_gap, w / 5));
+		var left:Float = px <= x + w / 2 ? 
 			(Math.max(x+rad, px))
 			:(Math.min(x + w - rad - hgap, px - hgap));
-		var right:Number = px <= x + w / 2?
+		var right:Float = px <= x + w / 2?
 			(Math.max(x + rad + hgap, px+hgap))
 			:(Math.min(x + w - rad, px));
-		var vgap:Number = Math.min(h - rad - rad, Math.max(min_gap, h / 5));
-		var top:Number = py < y + h / 2 ?
+		var vgap:Float = Math.min(h - rad - rad, Math.max(min_gap, h / 5));
+		var top:Float = py < y + h / 2 ?
 			Math.max(y + rad, py)
 			:Math.min(y + h - rad - vgap, py-vgap);
-		var bottom:Number = py < y + h / 2 ?
+		var bottom:Float = py < y + h / 2 ?
 			Math.max(y + rad + vgap, py+vgap)
 			:Math.min(y + h - rad, py);
 		
 		//bottom right cornernsd
-		var a:Number = rad - (rad*0.707106781186547);
-		var s:Number = rad - (rad*0.414213562373095);
+		var a:Float = rad - (rad*0.707106781186547);
+		var s:Float = rad - (rad*0.414213562373095);
 		
 		surface.moveTo ( x+w,y+h-rad);
 		if (rad > 0)

@@ -1,6 +1,6 @@
 package xuloo.ui;
 
-import flash.events.IEventDispatcher;
+import nme.events.IEventDispatcher;
 
 interface IInteractiveLayer implements IEventDispatcher
 {
@@ -15,10 +15,10 @@ interface IInteractiveLayer implements IEventDispatcher
 	function openPopup(url:String, title:String, specs:String):Void;	
 	function seek(time:Int, redispatch:Bool):Void;	
 	function getEnabled():Bool;
-	function setEnabled(value:Bool):Void;	
+	function setEnabled(value:Bool):Bool;	
 	function track(url:String):Void;	
-	function getPlayheadTime():Float;	
-	function setContext(value:IComponentContext):Void;	
+	function getPlayheadTime():Int;	
+	function setContext(value:IComponentContext):IComponentContext;	
 	function getService():IComponentService;	
 	function getComponents():Array<UIComponent>;
 }
