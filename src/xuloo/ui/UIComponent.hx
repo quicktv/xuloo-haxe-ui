@@ -24,6 +24,7 @@ package xuloo.ui;
 
 import minject.Injector;
 import msignal.Signal;
+import nme.display.DisplayObject;
 import nme.display.DisplayObjectContainer;
 import nme.events.Event;
 
@@ -46,6 +47,8 @@ class UIComponent extends DisplayObjectContainer
 	@inject public var injector:Injector;
 	
 	public var interactiveLayer(default, default):IInteractiveLayer;
+	
+	public var instanceName(default, default):String;
 	
 	public var context(getContext, setContext):IComponentContext;
 	var _context:IComponentContext;
@@ -97,6 +100,10 @@ class UIComponent extends DisplayObjectContainer
 		
 		initialize();
 	}
+	
+	public function post():Void {
+		
+	}
 
 	public function addPlugin(plugin:UIComponentPlugin):Void {
 		if (_plugins.exists(plugin.name)) {
@@ -139,6 +146,35 @@ class UIComponent extends DisplayObjectContainer
 		} else {
 			Console.log("there are no actions for event type '" + event + "'");
 		}
+	}
+	
+	public function getComponentByName(name:String, ?recurse:Bool = false):UIComponent {
+
+		for (i in 0...numChildren) {
+			var child:DisplayObject = getChildAt(i);
+			if (Std.is(child, UIComponent)) {
+				var childComponent:UIComponent = cast(child, UIComponent);
+				Console.log("checking '" + childComponent.instanceName + "' against '" + name + "'");
+				if (childComponent.instanceName == name) {
+					return childComponent;
+				}
+			}
+		}
+
+		if (recurse) {
+			for (i in 0...numChildren) {
+				var child:DisplayObject = getChildAt(i);
+				if (Std.is(child, UIComponent)) {
+					var childComponent:UIComponent = cast(child, UIComponent);
+					var result:UIComponent = childComponent.getComponentByName(name, true);
+					if (result != null) {
+						return result;
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 
 	///// internal //////
