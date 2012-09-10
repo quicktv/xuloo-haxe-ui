@@ -6,9 +6,9 @@ interface IInteractiveLayer implements IEventDispatcher
 {
 	var enabled(getEnabled, setEnabled):Bool;
 	var playheadTime(getPlayheadTime, never):Int;
-	var context(never, setContext):IComponentContext;
+	var componentContext(getComponentContext, setComponentContext):IComponentContext;
 	var service(getService, never):IComponentService;
-	var components(getComponents, never):Array<UIComponent>;
+	//var components(getComponents, never):Array<UIComponent>;
 	
 	function pauseVideo():Void;	
 	function playVideo():Void;	
@@ -18,7 +18,8 @@ interface IInteractiveLayer implements IEventDispatcher
 	function setEnabled(value:Bool):Bool;	
 	function track(url:String):Void;	
 	function getPlayheadTime():Int;	
-	function setContext(value:IComponentContext):IComponentContext;	
+	function getComponentContext():IComponentContext;
+	function setComponentContext(value:IComponentContext):IComponentContext;	
 	function getService():IComponentService;	
-	function getComponents():Array<UIComponent>;
+	//function getComponents():Array<UIComponent>;
 }

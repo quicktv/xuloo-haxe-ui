@@ -8,7 +8,7 @@ interface IComponentContext
 {
 	var editing(getEditing, never):Bool;
 	var previewing(getPreviewing, never):Bool;
-	var components(getComponents, setComponents):Array<UIComponent>;
+	var root(getRoot, setRoot):UIComponent;
 	var serverContext(getServerContext, never):String;
 	var releaseBucket(getReleaseBucket, never):String;
 	var versions(getVersions, never):IVersions;
@@ -16,8 +16,8 @@ interface IComponentContext
 	
 	function getEditing():Bool;
 	function getPreviewing():Bool;	
-	function getComponents():Array<UIComponent>;
-	function setComponents(value:Array<UIComponent>):Array<UIComponent>;	
+	function getRoot():UIComponent;
+	function setRoot(value:UIComponent):UIComponent;	
 	function getServerContext():String;	
 	function getReleaseBucket():String;	
 	function getVersions():IVersions;	

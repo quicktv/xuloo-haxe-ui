@@ -53,7 +53,7 @@ class UIComponent extends DisplayObjectContainer
 	public var context(getContext, setContext):IComponentContext;
 	var _context:IComponentContext;
 	function getContext():IComponentContext {
-		return _context = (_context == null) ? interactiveLayer.context : _context;
+		return _context = (_context == null) ? interactiveLayer.componentContext : _context;
 	}
 	function setContext(value:IComponentContext):IComponentContext {
 		return _context = value;
