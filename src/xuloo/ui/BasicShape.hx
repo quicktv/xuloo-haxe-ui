@@ -1,6 +1,5 @@
 package xuloo.ui;
 
-import nme.display.BlendMode;
 import nme.display.Graphics;
 import nme.display.Sprite;
 import nme.geom.Point;
@@ -32,8 +31,8 @@ class BasicShape extends UIComponent
 	}
 	
 	var _w:Float;	
-	public function setWidth(value:Float):Float {
-		super.width = _w =  value;
+	public override function setWidth(value:Float):Float {
+		width = _w =  value;
 
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
@@ -43,8 +42,8 @@ class BasicShape extends UIComponent
 	}
 	
 	var _h:Float;	
-	public function setHeight(value:Float):Float {
-		super.height = _h =  value;
+	public override function setHeight(value:Float):Float {
+		height = _h =  value;
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
 		drawBorderSprite();
@@ -183,8 +182,13 @@ class BasicShape extends UIComponent
 		_backgroundSprite = new Sprite();
 		_innerBorderSprite = new Sprite();
 		
-		_borderSprite.blendMode = BlendMode.LAYER;
-		_innerBorderSprite.blendMode = BlendMode.ERASE;			
+		#if flash
+		_borderSprite.blendMode = flash.display.BlendMode.LAYER;
+		_innerBorderSprite.blendMode = flash.display.BlendMode.ERASE;	
+		#elseif js
+		//_borderSprite.blendMode = jeash.display.BlendMode.LAYER;
+		//_innerBorderSprite.blendMode = jeash.display.BlendMode.ERASE;
+		#end	
 		
 		drawBackgroundSprite();
 		drawBorderSprite();

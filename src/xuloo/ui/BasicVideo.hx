@@ -1,9 +1,9 @@
 package xuloo.ui;
 
+import nme.display.DisplayObject;
 import xuloo.ui.IVideoPlayer;
 
 #if flash
-import flash.display.DisplayObject;
 import flash.display.Loader;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
@@ -16,7 +16,9 @@ class BasicVideo extends BasicShape {
 	public var player(getPlayer, never) : IVideoPlayer;
 	public var source(getSource, setSource) : VideoModel;
 
+	#if flash 
 	var _loader : Loader;
+	#end
 	
 	var _player : IVideoPlayer;
 	public function getPlayer() : IVideoPlayer {
@@ -94,7 +96,7 @@ class BasicVideo extends BasicShape {
 			//_loader.contentLoaderInfo.applicationDomain.getDefinition("qtv.ivp.player.VideoPlayer");
 			//var clazz : Class<Dynamic> = cast((), Class);
 			//_player = cast(new Clazz(), IVideoPlayer);
-			addChildAt(cast(_player, DisplayObject), 1);
+			_sprite.addChildAt(cast(_player, DisplayObject), 1);
 			_player.video = _source;
 			_player.init();
 			if(_player.isReady)  {

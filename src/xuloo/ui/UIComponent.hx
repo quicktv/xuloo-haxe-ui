@@ -27,6 +27,7 @@ import msignal.Signal;
 import nme.display.DisplayObject;
 import nme.display.DisplayObjectContainer;
 import nme.events.Event;
+import nme.events.IEventDispatcher;
 
 /**
 Simple implementation of a cross platform View class that composes a
@@ -42,8 +43,62 @@ Each target has a platform specific element for accessing the raw display API (f
 @see DataView
 
 */
-class UIComponent extends DisplayObjectContainer
+class UIComponent implements IEventDispatcher
 {	
+	public var sprite(getSprite, never):DisplayObjectContainer;
+	var _sprite:DisplayObjectContainer;
+	public function getSprite():DisplayObjectContainer {
+		return _sprite;
+	}
+	
+	public var width(getWidth, setWidth):Float;
+	public function getWidth():Float { return _sprite.width; }
+	public function setWidth(value:Float):Float { return _sprite.width = value; }
+	
+	public var height(getHeight, setHeight):Float;
+	public function getHeight():Float { return _sprite.height; }
+	public function setHeight(value:Float):Float { return _sprite.height = value; }
+	
+	public var x (getX, setX):Float;
+	public function getX():Float { return _sprite.x; }
+	public function setX(value:Float):Float { return _sprite.x = value; }
+	
+	public var y(getY, setY):Float;
+	public function getY():Float { return _sprite.y; }
+	public function setY(value:Float):Float { return _sprite.y = value; }
+	
+	public var visible(getVisible, setVisible):Bool;
+	public function getVisible():Bool { return _sprite.visible; }
+	public function setVisible(value:Bool):Bool { return _sprite.visible = value; }
+	
+	public var alpha(getAlpha, setAlpha):Float;
+	public function getAlpha():Float {return _sprite.alpha; }
+	public function setAlpha(value:Float):Float { return _sprite.alpha = value; }
+	
+	public function addEventListener(type : String, listener : Dynamic -> Void, useCapture : Bool = false, priority : Int = 0, useWeakReference : Bool = false) : Void {
+		_sprite.addEventListener(type, listener, useCapture, priority, useWeakReference);
+	}
+    public function dispatchEvent(event : Event) : Bool {
+    	return _sprite.dispatchEvent(event);
+    }
+    public function hasEventListener(type : String) : Bool {
+    	return _sprite.hasEventListener(type);
+    }
+    public function removeEventListener(type : String, listener : Dynamic -> Void, useCapture : Bool = false) : Void {
+    	return _sprite.removeEventListener(type, listener, useCapture);
+    }
+    public function willTrigger(type : String) : Bool {
+    	return _sprite.willTrigger(type);
+    }
+	
+	public function addChild(value:DisplayObject):Void {
+		_sprite.addChild(value);
+	}
+	
+	public function removeChild(value:DisplayObject):Void {
+		_sprite.removeChild(value);
+	}
+
 	@inject public var injector:Injector;
 	
 	public var interactiveLayer(default, default):IInteractiveLayer;
@@ -92,11 +147,10 @@ class UIComponent extends DisplayObjectContainer
 
 	public function new()
 	{
-		super();
-		
 		_plugins = new Hash<UIComponentPlugin>();
 		_actions = new Hash<ActionList>();
 		_dirty = true;
+		_sprite = new DisplayObjectContainer();
 		
 		initialize();
 	}
@@ -150,8 +204,8 @@ class UIComponent extends DisplayObjectContainer
 	
 	public function getComponentByName(name:String, ?recurse:Bool = false):UIComponent {
 
-		for (i in 0...numChildren) {
-			var child:DisplayObject = getChildAt(i);
+		for (i in 0..._sprite.numChildren) {
+			var child:DisplayObject = _sprite.getChildAt(i);
 			if (Std.is(child, UIComponent)) {
 				var childComponent:UIComponent = cast(child, UIComponent);
 				Console.log("checking '" + childComponent.instanceName + "' against '" + name + "'");
@@ -162,8 +216,8 @@ class UIComponent extends DisplayObjectContainer
 		}
 
 		if (recurse) {
-			for (i in 0...numChildren) {
-				var child:DisplayObject = getChildAt(i);
+			for (i in 0..._sprite.numChildren) {
+				var child:DisplayObject = _sprite.getChildAt(i);
 				if (Std.is(child, UIComponent)) {
 					var childComponent:UIComponent = cast(child, UIComponent);
 					var result:UIComponent = childComponent.getComponentByName(name, true);
