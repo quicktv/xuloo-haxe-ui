@@ -1,24 +1,24 @@
 package xuloo.ui;
 
-import qtv.api.core.IVersions;
+import xuloo.ui.IVersions;
 
-public class ComponentContext implements IComponentContext
+class ComponentContext implements IComponentContext
 {
-	var editing(getEditing, never):Bool;
-	var previewing(getPreviewing, never):Bool;
-	var root(getRoot, setRoot):UIComponent;
-	var serverContext(getServerContext, never):String;
-	var releaseBucket(getReleaseBucket, never):String;
-	var versions(getVersions, never):IVersions;
-	var projectId(getProjectId, never):Int;
+	public var editing(getEditing, never):Bool;
+	public var previewing(getPreviewing, never):Bool;
+	public var root(getRoot, setRoot):UIComponent;
+	public var serverContext(getServerContext, never):String;
+	public var releaseBucket(getReleaseBucket, never):String;
+	public var versions(getVersions, never):IVersions;
+	public var projectId(getProjectId, never):Int;
 	
-	var _editing:Boolean;	
+	var _editing:Bool;	
 	public function getEditing():Bool {
 		return _editing;
 	}
 	
 	var _previewing:Bool;
-	public function get previewing():Bool {
+	public function getPreviewing():Bool {
 		return _previewing;
 	}
 	
@@ -26,7 +26,7 @@ public class ComponentContext implements IComponentContext
 	public function getRoot():UIComponent {
 		return _root;
 	}
-	public function set components(value:UIComponent):void {
+	public function setRoot(value:UIComponent):UIComponent {
 		return _root = value;
 	}
 	
@@ -53,7 +53,7 @@ public class ComponentContext implements IComponentContext
 	public function new(editing:Bool, previewing:Bool, root:UIComponent, serverContext:String, releaseBucket:String, versions:IVersions, projectId:Int) {
 		_editing = editing;
 		_previewing = previewing;
-		_components = components;
+		_root = root;
 		_serverContext = serverContext;
 		_releaseBucket = releaseBucket;
 		_versions = versions;
