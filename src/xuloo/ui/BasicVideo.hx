@@ -1,6 +1,7 @@
 package xuloo.ui;
 
 import nme.display.DisplayObject;
+import qtv.impl.core.VideoModel;
 import xuloo.ui.IVideoPlayer;
 
 #if flash
@@ -9,8 +10,6 @@ import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.net.URLRequest;
 #end
-
-import qtv.api.VideoModel;
 
 class BasicVideo extends BasicShape {
 	public var player(getPlayer, never) : IVideoPlayer;

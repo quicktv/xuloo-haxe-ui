@@ -1,7 +1,7 @@
 package xuloo.ui;
 
 import msignal.Signal;
-import qtv.api.VideoModel;
+import qtv.api.core.IVideo;
 
 interface IVideoPlayer implements IVideoController
 {
@@ -12,7 +12,7 @@ interface IVideoPlayer implements IVideoController
 	var currentState(getCurrentState, never):PlayerState;
 	var volumeChanged(getVolumeChanged, never):Signal1<Float>;
 	var playheadTimeChanged(getPlayheadTimeChanged, never):Signal1<Int>;
-	var video(never, setVideo):VideoModel;
+	var video(never, setVideo):IVideo;
 	var onPlay(getOnPlay, never):Signal0;
 	var onPause(getOnPause, never):Signal0;
 	var onStop(getOnStop, never):Signal0;
@@ -24,7 +24,7 @@ interface IVideoPlayer implements IVideoController
 	function getCurrentState():PlayerState;	
 	function getVolumeChanged():Signal1<Float>;	
 	function getPlayheadTimeChanged():Signal1<Int>;	
-	function setVideo(value:VideoModel):VideoModel;		
+	function setVideo(value:IVideo):IVideo;		
 	function getOnPlay():Signal0;
 	function getOnPause():Signal0;
 	function getOnStop():Signal0;	
