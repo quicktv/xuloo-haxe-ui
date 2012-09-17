@@ -8,7 +8,7 @@ interface IInteractiveLayer implements IEventDispatcher
 	var playheadTime(getPlayheadTime, never):Int;
 	var componentContext(getComponentContext, setComponentContext):IComponentContext;
 	var service(getService, never):IComponentService;
-	var root(getRoot, never):UIComponent;
+	var rootComponent(getRootComponent, never):UIComponent;
 	
 	function pauseVideo():Void;	
 	function playVideo():Void;	
@@ -21,5 +21,5 @@ interface IInteractiveLayer implements IEventDispatcher
 	function getComponentContext():IComponentContext;
 	function setComponentContext(value:IComponentContext):IComponentContext;	
 	function getService():IComponentService;	
-	function getRoot():UIComponent;
+	function getRootComponent():UIComponent;
 }
