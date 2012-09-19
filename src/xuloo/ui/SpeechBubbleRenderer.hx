@@ -1,8 +1,8 @@
 package xuloo.ui;
 
-import nme.display.Graphics;
-import nme.geom.Point;
-import nme.geom.Rectangle;
+import flash.display.Graphics;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 
 class SpeechBubbleRenderer implements IShapeRenderer {
 	

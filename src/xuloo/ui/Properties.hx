@@ -1,9 +1,9 @@
 package xuloo.ui;
 
-import nme.events.Event;
-import nme.events.IOErrorEvent;
-import nme.net.URLLoader;
-import nme.net.URLRequest;
+import flash.events.Event;
+import flash.events.IOErrorEvent;
+import flash.net.URLLoader;
+import flash.net.URLRequest;
 
 import msignal.Signal;
 

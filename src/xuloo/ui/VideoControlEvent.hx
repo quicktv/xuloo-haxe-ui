@@ -1,6 +1,6 @@
 package xuloo.ui;
 
-import nme.events.Event;
+import flash.events.Event;
 
 class VideoControlEvent extends Event {
 	public static var PAUSE_VIDEO:String = "PauseVideo";

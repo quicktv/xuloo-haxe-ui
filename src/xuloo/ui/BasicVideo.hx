@@ -1,10 +1,10 @@
 package xuloo.ui;
 
-import nme.display.DisplayObject;
 import qtv.impl.core.VideoModel;
 import xuloo.ui.IVideoPlayer;
 
 #if flash
+import flash.display.DisplayObject;
 import flash.display.Loader;
 import flash.events.Event;
 import flash.events.IOErrorEvent;

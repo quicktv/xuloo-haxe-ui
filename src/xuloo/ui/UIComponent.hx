@@ -24,10 +24,10 @@ package xuloo.ui;
 
 import minject.Injector;
 import msignal.Signal;
-import nme.display.DisplayObject;
-import nme.display.DisplayObjectContainer;
-import nme.events.Event;
-import nme.events.IEventDispatcher;
+import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
+import flash.events.Event;
+import flash.events.IEventDispatcher;
 
 /**
 Simple implementation of a cross platform View class that composes a

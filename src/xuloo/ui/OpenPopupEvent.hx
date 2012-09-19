@@ -1,6 +1,6 @@
 package xuloo.ui;
 
-import nme.events.Event;
+import flash.events.Event;
 
 class OpenPopupEvent extends Event
 {

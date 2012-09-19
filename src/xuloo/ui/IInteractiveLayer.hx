@@ -1,6 +1,6 @@
 package xuloo.ui;
 
-import nme.events.IEventDispatcher;
+import flash.events.IEventDispatcher;
 
 interface IInteractiveLayer implements IEventDispatcher
 {

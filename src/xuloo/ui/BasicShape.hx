@@ -1,9 +1,9 @@
 package xuloo.ui;
 
-import nme.display.Graphics;
-import nme.display.Sprite;
-import nme.geom.Point;
-import nme.geom.Rectangle;
+import flash.display.Graphics;
+import flash.display.Sprite;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 
 class BasicShape extends UIComponent
 {
