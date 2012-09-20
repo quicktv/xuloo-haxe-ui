@@ -40,7 +40,7 @@ class BasicShape extends UIComponent {
 
 	var _w : Float;
 	override public function setWidth(value : Float) : Float {
-		super.width = _w = value;
+		super.setWidth(_w = value);
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
 		drawBorderSprite();
@@ -49,7 +49,7 @@ class BasicShape extends UIComponent {
 
 	var _h : Float;
 	override public function setHeight(value : Float) : Float {
-		super.height = _h = value;
+		super.setHeight(_h = value);
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
 		drawBorderSprite();
@@ -150,6 +150,8 @@ class BasicShape extends UIComponent {
 	}
 
 	public function new() {
+		super();
+		
 		_backgroundSprite = new Sprite();
 		_borderSprite = new Sprite();
 		_innerBorderSprite = new Sprite();
@@ -157,7 +159,7 @@ class BasicShape extends UIComponent {
 		_h = 0.0;
 		_backgroundColour = 0xffffff;
 		_borderThickness = 0;
-		super();
+		
 		initialise();
 	}
 

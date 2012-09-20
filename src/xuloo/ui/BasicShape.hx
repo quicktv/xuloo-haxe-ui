@@ -32,21 +32,26 @@ class BasicShape extends UIComponent
 	
 	var _w:Float;	
 	public override function setWidth(value:Float):Float {
-		width = _w =  value;
-
+		Console.log("setting width: " + value);
+		super.setWidth(_w =  value);
+		Console.log("set width: " + value + " " + _w + " " + super.getWidth());
 		drawBackgroundSprite();
+		Console.log("crawing background: " + value + " " + _w + " " + super.getWidth());
 		drawInnerBorderSprite();
+		Console.log("drawing inner border: " + value + " " + _w + " " + super.getWidth());
 		drawBorderSprite();
-		
+		Console.log("drawing border: " + value + " " + _w + " " + super.getWidth());
 		return _w;
 	}
 	
 	var _h:Float;	
 	public override function setHeight(value:Float):Float {
-		height = _h =  value;
+		super.setHeight(_h = value);
+
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
 		drawBorderSprite();
+
 		return _h;
 	}
 	
@@ -100,7 +105,7 @@ class BasicShape extends UIComponent
 	}
 	public function setBorderThickness(value:Float):Float {
 		_borderThickness = value;
-		//drawBorderSprite()	
+		drawBorderSprite();
 		drawInnerBorderSprite();
 		return _borderThickness;
 	}
@@ -167,46 +172,51 @@ class BasicShape extends UIComponent
 	
 	public function new() {
 		super();
-		
-		initialise();
 	}
 	
-	public function initialise():Void {	
+	public override function initialize():Void {	
+		_borderThickness = 0;
+		_backgroundColour = 0xffcc00;
+		
+		_borderSprite = new Sprite();
+		_borderSprite.name = "Border Sprite";
+		_backgroundSprite = new Sprite();
+		_backgroundSprite.name = "Background Sprite";
+		_innerBorderSprite = new Sprite();
+		_innerBorderSprite.name = "Inner Border Sprite";
+		
 		shape = Constants.RECTANGLE;
 		width = 200;
 		height = 100;
 		
-		_backgroundColour = 0xffffff;
-		
-		_borderSprite = new Sprite();
-		_backgroundSprite = new Sprite();
-		_innerBorderSprite = new Sprite();
-		
-		#if flash
+		/*#if flash
 		_borderSprite.blendMode = flash.display.BlendMode.LAYER;
 		_innerBorderSprite.blendMode = flash.display.BlendMode.ERASE;	
 		#elseif js
 		//_borderSprite.blendMode = jeash.display.BlendMode.LAYER;
 		//_innerBorderSprite.blendMode = jeash.display.BlendMode.ERASE;
-		#end	
+		#end*/	
 		
-		drawBackgroundSprite();
-		drawBorderSprite();
-		drawInnerBorderSprite();
+		//drawBackgroundSprite();
+		//drawBorderSprite();
+		//drawInnerBorderSprite();
 		
 		addChild(_backgroundSprite);
 		addChild(_borderSprite);
 		_borderSprite.addChild(_innerBorderSprite);
-					
+				
 		//dispatchEvent(new Event(Event.COMPLETE));
 	}
 	
 	public function drawBackgroundSprite():Void {
 		var surface:Graphics = _backgroundSprite.graphics;
-		
+			
 		surface.clear();
-
+		surface.lineStyle();
+		surface.beginFill(_backgroundColour);
+		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
+			Console.log("drawing background: " + _w + "x" + _h);
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
 		}
 		
@@ -214,7 +224,7 @@ class BasicShape extends UIComponent
 	}
 	
 	public function drawBorderSprite():Void {
-		var surface:Graphics = _borderSprite.graphics;
+		/*var surface:Graphics = _borderSprite.graphics;
 		
 		surface.clear();
 		surface.beginFill(_borderColour);
@@ -223,11 +233,11 @@ class BasicShape extends UIComponent
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
 		}
 		
-		surface.endFill();
+		surface.endFill();*/
 	}
 	
 	public function drawInnerBorderSprite():Void {			
-		var surface:Graphics = _innerBorderSprite.graphics;
+		/*var surface:Graphics = _innerBorderSprite.graphics;
 		
 		surface.clear();
 		surface.beginFill(0xff0000);
@@ -237,7 +247,7 @@ class BasicShape extends UIComponent
 			_renderer.render(surface, new Rectangle(_borderThickness/2, _borderThickness/2, width - (_borderThickness), height - (_borderThickness)));
 		}
 		
-		surface.endFill();
+		surface.endFill();*/
 		
 	}
 }

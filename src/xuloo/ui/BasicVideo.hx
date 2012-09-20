@@ -12,7 +12,7 @@ import flash.net.URLRequest;
 #end
 
 class BasicVideo extends BasicShape {
-	public var player(getPlayer, never) : IVideoPlayer;
+	public var player(getPlayer, setPlayer) : IVideoPlayer;
 	public var source(getSource, setSource) : VideoModel;
 
 	#if flash 
@@ -21,6 +21,11 @@ class BasicVideo extends BasicShape {
 	
 	var _player : IVideoPlayer;
 	public function getPlayer() : IVideoPlayer {
+		return _player;
+	}
+	public function setPlayer(value:IVideoPlayer) : IVideoPlayer {
+		_player = value;
+		_sprite.addChildAt(cast(_player, DisplayObject), 1);
 		return _player;
 	}
 
@@ -45,11 +50,12 @@ class BasicVideo extends BasicShape {
 	}
 
 	public function new() {
-		_aspectRatio = 1;
 		super();
+		
+		_aspectRatio = 1;
 	}
 
-	var _source : Dynamic;
+	var _source : VideoModel;
 	var _sourceKey : Dynamic;
 	/**
 	 * To get current source ,path of image
@@ -61,21 +67,18 @@ class BasicVideo extends BasicShape {
 	/**
 	 * To set current source and it load the image into loader
 	 */
-	public function setSource(value : Dynamic) : Dynamic {
+	public function setSource(value : VideoModel) : VideoModel {
+		Console.log("setting source for the video to " + value + " " + _player);
 		
-		#if flash
-			if(_player != null)  {
-				removeChild(cast(_player, DisplayObject));
-			}
-			_source = value;
-			_video = value;
-			var playerUrl : String = context.releaseBucket + "/qtv-flex-interactive-video-player-" + _video.ovp.shortKey + "-" + context.versions.getValue(Versions.QTV_INTERACTIVE_VIDEO_PLAYER_VERSION) + ".swf";
-			_aspectRatio = _video.width / _video.height;
-			_loader = new Loader();
-			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadComplete);
-			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-			_loader.load(new URLRequest(playerUrl));
-		#end
+		_player.video = _source = value;
+		_player.init();
+		if (_player.isReady)  {
+			Console.log("video is already ready");
+			onPlayerReady();
+		} else {
+			Console.log("video not ready - adding a listener");
+			_player.ready.add(onPlayerReady);
+		}
 		
 		visible = true;
 		alpha = 1;
@@ -83,8 +86,8 @@ class BasicVideo extends BasicShape {
 		return value;
 	}
 
-	override public function initialise() : Void {
-		super.initialise();
+	override public function initialize() : Void {
+		super.initialize();
 		backgroundColour = 0x000000;
 	}
 
@@ -111,6 +114,7 @@ class BasicVideo extends BasicShape {
 	}
 
 	function onPlayerReady() : Void {
+		Console.log("player's ready - let's go!");
 		updateVideoDimensions();
 		dispatchEvent(new Event(Event.COMPLETE));
 		_isReady = true;
@@ -142,6 +146,9 @@ class BasicVideo extends BasicShape {
 			videoDisplay.y = (_h - playerHeight) / 2;
 			videoDisplay.width = playerWidth;
 			videoDisplay.height = playerHeight;
+			
+			Console.log("video player dimensions: " + videoDisplay.x + " " + videoDisplay.y + " " + videoDisplay.width + " " + videoDisplay.height);
+			Console.log("video tool dimensions: " + x + " " + y + " " + width + " " + height);
 		}
 	}
 

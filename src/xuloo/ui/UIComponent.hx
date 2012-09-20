@@ -26,6 +26,7 @@ import minject.Injector;
 import msignal.Signal;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
+import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.IEventDispatcher;
 
@@ -45,19 +46,19 @@ Each target has a platform specific element for accessing the raw display API (f
 */
 class UIComponent implements IEventDispatcher
 {	
-	public var sprite(getSprite, never):DisplayObjectContainer;
-	var _sprite:DisplayObjectContainer;
-	public function getSprite():DisplayObjectContainer {
+	public var sprite(getSprite, never):Sprite;
+	var _sprite:Sprite;
+	public function getSprite():Sprite {
 		return _sprite;
 	}
 	
 	public var width(getWidth, setWidth):Float;
 	public function getWidth():Float { return _sprite.width; }
-	public function setWidth(value:Float):Float { return _sprite.width = value; }
+	public function setWidth(value:Float):Float { return /*_sprite.width = */value; }
 	
 	public var height(getHeight, setHeight):Float;
 	public function getHeight():Float { return _sprite.height; }
-	public function setHeight(value:Float):Float { return _sprite.height = value; }
+	public function setHeight(value:Float):Float { return /*_sprite.height = */value; }
 	
 	public var x (getX, setX):Float;
 	public function getX():Float { return _sprite.x; }
@@ -150,7 +151,13 @@ class UIComponent implements IEventDispatcher
 		_plugins = new Hash<UIComponentPlugin>();
 		_actions = new Hash<ActionList>();
 		_dirty = true;
-		_sprite = new DisplayObjectContainer();
+		_sprite = new Sprite();
+		_sprite.name = Type.getClassName(Type.getClass(this));
+		
+		/*_sprite.graphics.lineStyle();
+		_sprite.graphics.beginFill(0xffcc00);
+		_sprite.graphics.drawRect(0, 0, 100, 100);
+		_sprite.graphics.endFill();*/
 		
 		initialize();
 	}
@@ -236,7 +243,7 @@ class UIComponent implements IEventDispatcher
 	/**
 	Initializes platform specific properties and state
 	*/
-	function initialize() {
+	function initialize():Void {
 
 	}
 
