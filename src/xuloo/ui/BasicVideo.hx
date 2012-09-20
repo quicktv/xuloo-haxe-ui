@@ -70,6 +70,7 @@ class BasicVideo extends BasicShape {
 	public function setSource(value : VideoModel) : VideoModel {
 		Console.log("setting source for the video to " + value + " " + _player);
 		
+		_aspectRatio = value.width / value.height;
 		_player.video = _source = value;
 		_player.init();
 		if (_player.isReady)  {
@@ -92,36 +93,11 @@ class BasicVideo extends BasicShape {
 	}
 
 	#if flash
-	function onLoadComplete(e : Event) : Void {
-		try {
-			_player = cast(Type.createInstance(Type.resolveClass("qtv.ivp.player.VideoPlayer"),[]), IVideoPlayer);
-			//_loader.contentLoaderInfo.applicationDomain.getDefinition("qtv.ivp.player.VideoPlayer");
-			//var clazz : Class<Dynamic> = cast((), Class);
-			//_player = cast(new Clazz(), IVideoPlayer);
-			_sprite.addChildAt(cast(_player, DisplayObject), 1);
-			_player.video = _source;
-			_player.init();
-			if(_player.isReady)  {
-				onPlayerReady();
-			}
-
-			else  {
-				_player.ready.add(onPlayerReady);
-			}
-
-		}
-		catch(msg : String){ };
-	}
-
 	function onPlayerReady() : Void {
-		Console.log("player's ready - let's go!");
 		updateVideoDimensions();
 		dispatchEvent(new Event(Event.COMPLETE));
 		_isReady = true;
 		ready.dispatch();
-	}
-
-	function onLoadError(e : IOErrorEvent) : Void {
 	}
 	#end
 
@@ -130,25 +106,23 @@ class BasicVideo extends BasicShape {
 		if(_player != null)  {
 			var videoDisplay : DisplayObject = cast(_player, DisplayObject);
 			var myAspect : Float = _w / _h;
+
 			var playerWidth : Float = 0.0;
 			var playerHeight : Float = 0.0;
 			if(myAspect < _aspectRatio)  {
 				playerWidth = _w;
 				playerHeight = _w / _aspectRatio;
-			}
-
-			else  {
+			} else {
 				playerHeight = _h;
 				playerWidth = _h * _aspectRatio;
 			}
+			
+			Console.log(_w + " " + _h + " " + _aspectRatio + " " + playerWidth + " " + playerHeight);
 
 			videoDisplay.x = (_w - playerWidth) / 2;
 			videoDisplay.y = (_h - playerHeight) / 2;
 			videoDisplay.width = playerWidth;
 			videoDisplay.height = playerHeight;
-			
-			Console.log("video player dimensions: " + videoDisplay.x + " " + videoDisplay.y + " " + videoDisplay.width + " " + videoDisplay.height);
-			Console.log("video tool dimensions: " + x + " " + y + " " + width + " " + height);
 		}
 	}
 
