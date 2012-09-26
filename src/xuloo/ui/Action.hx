@@ -18,5 +18,9 @@ class Action
 	public function execute():Void {
 		
 	}
+
+	public function toString():String {
+		return "[Action('" + event + "')]";
+	}
 	
 }

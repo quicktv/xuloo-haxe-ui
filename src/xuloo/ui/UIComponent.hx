@@ -181,12 +181,12 @@ class UIComponent implements IEventDispatcher
 	}
 	
 	public function addAction(action:Action):Void {
+
 		if (!_actions.exists(action.event)) {
 			_actions.set(action.event, new ActionList(action.event));
 		}
+
 		_actions.get(action.event).addAction(action);
-		
-		Console.log("adding " + action.event + " operation");
 		
 		if (!hasEventListener(action.event)) {
 			addEventListener(action.event, handleEvent);
@@ -194,14 +194,13 @@ class UIComponent implements IEventDispatcher
 	}
 	
 	public function handleEvent(e:Event):Void {
-		Console.log("handling event " + e.type);
 		triggerActions(e.type);
 	}
 	
 	public function triggerActions(event:String):Void {
+
 		if (_actions.exists(event)) {
 			for (action in _actions.get(event).actions) {
-				Console.log("executing " + action);
 				action.execute();
 			}
 		} else {
@@ -255,25 +254,5 @@ class UIComponent implements IEventDispatcher
 		for (plugin in _plugins) {
 			plugin.resolve(this);
 		}
-	}
-}
-
-class ActionList {
-	
-	public var event(default, default):String;
-	public var actions(getActions, never):Array<Action>;
-	
-	var _actions:Array<Action>;
-	public function getActions():Array<Action> {
-		return _actions;
-	}
-	
-	public function new(event:String) {
-		this.event = event;
-		_actions = new Array<Action>();
-	}
-	
-	public function addAction(action:Action):Void {
-		_actions.push(action);
 	}
 }
