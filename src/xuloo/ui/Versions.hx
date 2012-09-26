@@ -1,4 +1,6 @@
 package xuloo.ui;
+
+import qtv.utils.Properties;
 	
 class Versions implements IVersions
 {	
@@ -11,6 +13,8 @@ class Versions implements IVersions
 	
 	public function new(arg:Dynamic)
 	{
+		Console.log("what is arg? " + Type.getClassName(Type.getClass(arg)));
+	
 		_versions = new Hash<String>();
 		
 		if (Std.is(arg, FlashVars))

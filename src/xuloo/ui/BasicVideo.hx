@@ -3,13 +3,11 @@ package xuloo.ui;
 import qtv.impl.core.VideoModel;
 import xuloo.ui.IVideoPlayer;
 
-#if flash
 import flash.display.DisplayObject;
 import flash.display.Loader;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.net.URLRequest;
-#end
 
 class BasicVideo extends BasicShape {
 	public var player(getPlayer, setPlayer) : IVideoPlayer;
@@ -24,8 +22,11 @@ class BasicVideo extends BasicShape {
 		return _player;
 	}
 	public function setPlayer(value:IVideoPlayer) : IVideoPlayer {
+		Console.log("setting the player " + value);
 		_player = value;
+		Console.log("i have " + _sprite.numChildren + " children before...");
 		_sprite.addChildAt(cast(_player, DisplayObject), 1);
+		Console.log("and " + _sprite.numChildren + " after");
 		return _player;
 	}
 
@@ -92,14 +93,12 @@ class BasicVideo extends BasicShape {
 		backgroundColour = 0x000000;
 	}
 
-	#if flash
 	function onPlayerReady() : Void {
 		updateVideoDimensions();
 		dispatchEvent(new Event(Event.COMPLETE));
 		_isReady = true;
 		ready.dispatch();
 	}
-	#end
 
 	function updateVideoDimensions() : Void {
 

@@ -32,15 +32,12 @@ class BasicShape extends UIComponent
 	
 	var _w:Float;	
 	public override function setWidth(value:Float):Float {
-		Console.log("setting width: " + value);
 		super.setWidth(_w =  value);
-		Console.log("set width: " + value + " " + _w + " " + super.getWidth());
+
 		drawBackgroundSprite();
-		Console.log("crawing background: " + value + " " + _w + " " + super.getWidth());
 		drawInnerBorderSprite();
-		Console.log("drawing inner border: " + value + " " + _w + " " + super.getWidth());
 		drawBorderSprite();
-		Console.log("drawing border: " + value + " " + _w + " " + super.getWidth());
+
 		return _w;
 	}
 	
@@ -224,22 +221,27 @@ class BasicShape extends UIComponent
 	}
 	
 	public function drawBorderSprite():Void {
-		/*var surface:Graphics = _borderSprite.graphics;
+		#if flash
+		var surface:Graphics = _borderSprite.graphics;
 		
 		surface.clear();
+		surface.lineStyle();
 		surface.beginFill(_borderColour);
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
 		}
 		
-		surface.endFill();*/
+		surface.endFill();
+		#end
 	}
 	
-	public function drawInnerBorderSprite():Void {			
-		/*var surface:Graphics = _innerBorderSprite.graphics;
+	public function drawInnerBorderSprite():Void {		
+		#if flash	
+		var surface:Graphics = _innerBorderSprite.graphics;
 		
 		surface.clear();
+		surface.lineStyle();
 		surface.beginFill(0xff0000);
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0)
@@ -247,7 +249,7 @@ class BasicShape extends UIComponent
 			_renderer.render(surface, new Rectangle(_borderThickness/2, _borderThickness/2, width - (_borderThickness), height - (_borderThickness)));
 		}
 		
-		surface.endFill();*/
-		
+		surface.endFill();
+		#end
 	}
 }

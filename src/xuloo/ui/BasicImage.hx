@@ -11,9 +11,13 @@ import flash.events.MouseEvent;
 import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import flash.net.URLRequest;
+#if flash
 import flash.system.ApplicationDomain;
 import flash.system.LoaderContext;
 import flash.system.Security;
+#elseif js
+import jeash.system.Security;
+#end
 import qtv.operations.api.IOperation;
 
 class BasicImage extends UIComponent {
@@ -264,8 +268,11 @@ class BasicImage extends UIComponent {
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoadComplete, false, 0, true);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, handleLoadError, false, 0, true);
 			loader.contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleLoadStatus, false, 0, true);
-			var loaderContext : LoaderContext = new LoaderContext(true, ApplicationDomain.currentDomain);
-			loader.load(new URLRequest(_source), loaderContext);
+			#if flash
+			loader.load(new URLRequest(_source), new LoaderContext(true, ApplicationDomain.currentDomain));
+			#elseif js
+			loader.load(new URLRequest(_source));
+			#end
 		}
 
 		else if(Std.is(value, Bitmap))  {
