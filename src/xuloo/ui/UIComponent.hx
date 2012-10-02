@@ -91,13 +91,17 @@ class UIComponent implements IEventDispatcher
     public function willTrigger(type : String) : Bool {
     	return _sprite.willTrigger(type);
     }
+    
+    var _children:Array<UIComponent>;
 	
-	public function addChild(value:DisplayObject):Void {
-		_sprite.addChild(value);
+	public function addChild(value:UIComponent):Void {
+		_children.push(value);
+		_sprite.addChild(value.sprite);
 	}
 	
-	public function removeChild(value:DisplayObject):Void {
-		_sprite.removeChild(value);
+	public function removeChild(value:UIComponent):Void {
+		_children.remove(value);
+		_sprite.removeChild(value.sprite);
 	}
 
 	@inject public var injector:Injector;
@@ -150,6 +154,7 @@ class UIComponent implements IEventDispatcher
 	{
 		_plugins = new Hash<UIComponentPlugin>();
 		_actions = new Hash<ActionList>();
+		_children = new Array<UIComponent>();
 		_dirty = true;
 		_sprite = new Sprite();
 		_sprite.name = Type.getClassName(Type.getClass(this));
@@ -194,13 +199,19 @@ class UIComponent implements IEventDispatcher
 	}
 	
 	public function handleEvent(e:Event):Void {
+		Console.log("handling '" + e.type + "' event");
 		triggerActions(e.type);
 	}
 	
 	public function triggerActions(event:String):Void {
-
+		Console.log("are there actions to execute for '" + event + "' ? " + _actions.exists(event));
+		if (_actions.exists(event)) {
+			Console.log("the action list is '" + _actions.get(event) + "'");
+			Console.log("the actions are '" + _actions.get(event).actions + "'");
+		}
 		if (_actions.exists(event)) {
 			for (action in _actions.get(event).actions) {
+				Console.log("executing action: " + action);
 				action.execute();
 			}
 		} else {
@@ -210,7 +221,16 @@ class UIComponent implements IEventDispatcher
 	
 	public function getComponentByName(name:String, ?recurse:Bool = false):UIComponent {
 
-		for (i in 0..._sprite.numChildren) {
+		if (instanceName == name) return this;
+		
+		if (recurse) {
+			for (child in _children) {
+				var res:UIComponent = child.getComponentByName(name, recurse);
+				if (res != null) return res;
+			}
+		}
+
+		/*for (i in 0..._sprite.numChildren) {
 			var child:DisplayObject = _sprite.getChildAt(i);
 			if (Std.is(child, UIComponent)) {
 				var childComponent:UIComponent = cast(child, UIComponent);
@@ -232,7 +252,7 @@ class UIComponent implements IEventDispatcher
 					}
 				}
 			}
-		}
+		}*/
 
 		return null;
 	}
@@ -254,5 +274,9 @@ class UIComponent implements IEventDispatcher
 		for (plugin in _plugins) {
 			plugin.resolve(this);
 		}
+	}
+	
+	public function toString():String {
+		return "UIComponent[" + instanceName + "]";
 	}
 }

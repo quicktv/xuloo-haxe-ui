@@ -186,10 +186,11 @@ class BasicShape extends UIComponent
 		width = 200;
 		height = 100;
 		
-		/*#if flash
+		#if flash
 		_borderSprite.blendMode = flash.display.BlendMode.LAYER;
-		_innerBorderSprite.blendMode = flash.display.BlendMode.ERASE;	
-		#elseif js
+		_innerBorderSprite.blendMode = flash.display.BlendMode.ERASE;
+		#end
+		/*#elseif js
 		//_borderSprite.blendMode = jeash.display.BlendMode.LAYER;
 		//_innerBorderSprite.blendMode = jeash.display.BlendMode.ERASE;
 		#end*/	
@@ -198,8 +199,8 @@ class BasicShape extends UIComponent
 		//drawBorderSprite();
 		//drawInnerBorderSprite();
 		
-		addChild(_backgroundSprite);
-		addChild(_borderSprite);
+		sprite.addChild(_backgroundSprite);
+		sprite.addChild(_borderSprite);
 		_borderSprite.addChild(_innerBorderSprite);
 				
 		//dispatchEvent(new Event(Event.COMPLETE));
@@ -213,7 +214,6 @@ class BasicShape extends UIComponent
 		surface.beginFill(_backgroundColour);
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
-			Console.log("drawing background: " + _w + "x" + _h);
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
 		}
 		
@@ -242,7 +242,7 @@ class BasicShape extends UIComponent
 		
 		surface.clear();
 		surface.lineStyle();
-		surface.beginFill(0xff0000);
+		surface.beginFill(_backgroundColour);
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0)
 		{

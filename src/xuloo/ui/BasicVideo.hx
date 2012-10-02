@@ -22,11 +22,8 @@ class BasicVideo extends BasicShape {
 		return _player;
 	}
 	public function setPlayer(value:IVideoPlayer) : IVideoPlayer {
-		Console.log("setting the player " + value);
 		_player = value;
-		Console.log("i have " + _sprite.numChildren + " children before...");
-		_sprite.addChildAt(cast(_player, DisplayObject), 1);
-		Console.log("and " + _sprite.numChildren + " after");
+		_sprite.addChild(cast(_player, DisplayObject));
 		return _player;
 	}
 

@@ -22,4 +22,6 @@ interface IInteractiveLayer implements IEventDispatcher
 	function setComponentContext(value:IComponentContext):IComponentContext;	
 	function getService():IComponentService;	
 	function getRootComponent():UIComponent;
+	
+	function getComponentByName(name:String, ?recurse:Bool = false):UIComponent;
 }
