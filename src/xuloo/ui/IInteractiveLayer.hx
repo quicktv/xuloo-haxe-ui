@@ -1,5 +1,6 @@
 package xuloo.ui;
 
+import flash.display.Sprite;
 import flash.events.IEventDispatcher;
 
 interface IInteractiveLayer implements IEventDispatcher
@@ -9,6 +10,8 @@ interface IInteractiveLayer implements IEventDispatcher
 	var componentContext(getComponentContext, setComponentContext):IComponentContext;
 	var service(getService, never):IComponentService;
 	var rootComponent(getRootComponent, never):UIComponent;
+	
+	var sprite(getSprite, never):Sprite;
 	
 	function pauseVideo():Void;	
 	function playVideo():Void;	
@@ -22,6 +25,8 @@ interface IInteractiveLayer implements IEventDispatcher
 	function setComponentContext(value:IComponentContext):IComponentContext;	
 	function getService():IComponentService;	
 	function getRootComponent():UIComponent;
+	
+	function getSprite():Sprite;
 	
 	function getComponentByName(name:String, ?recurse:Bool = false):UIComponent;
 }
