@@ -199,19 +199,12 @@ class UIComponent implements IEventDispatcher
 	}
 	
 	public function handleEvent(e:Event):Void {
-		Console.log("handling '" + e.type + "' event");
 		triggerActions(e.type);
 	}
 	
 	public function triggerActions(event:String):Void {
-		Console.log("are there actions to execute for '" + event + "' ? " + _actions.exists(event));
-		if (_actions.exists(event)) {
-			Console.log("the action list is '" + _actions.get(event) + "'");
-			Console.log("the actions are '" + _actions.get(event).actions + "'");
-		}
 		if (_actions.exists(event)) {
 			for (action in _actions.get(event).actions) {
-				Console.log("executing action: " + action);
 				action.execute();
 			}
 		} else {
@@ -229,30 +222,6 @@ class UIComponent implements IEventDispatcher
 				if (res != null) return res;
 			}
 		}
-
-		/*for (i in 0..._sprite.numChildren) {
-			var child:DisplayObject = _sprite.getChildAt(i);
-			if (Std.is(child, UIComponent)) {
-				var childComponent:UIComponent = cast(child, UIComponent);
-				Console.log("checking '" + childComponent.instanceName + "' against '" + name + "'");
-				if (childComponent.instanceName == name) {
-					return childComponent;
-				}
-			}
-		}
-
-		if (recurse) {
-			for (i in 0..._sprite.numChildren) {
-				var child:DisplayObject = _sprite.getChildAt(i);
-				if (Std.is(child, UIComponent)) {
-					var childComponent:UIComponent = cast(child, UIComponent);
-					var result:UIComponent = childComponent.getComponentByName(name, true);
-					if (result != null) {
-						return result;
-					}
-				}
-			}
-		}*/
 
 		return null;
 	}
