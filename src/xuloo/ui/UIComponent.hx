@@ -195,6 +195,11 @@ class UIComponent implements IEventDispatcher
 		
 		if (!hasEventListener(action.event)) {
 			addEventListener(action.event, handleEvent);
+			
+			if (action.event == "click") {
+				console.log("adding a click event - adding the touch event");
+				addEventListener("touchBegin", handleEvent);
+			}
 		}
 	}
 	
