@@ -204,6 +204,7 @@ class UIComponent implements IEventDispatcher
 	}
 	
 	public function handleEvent(e:Event):Void {
+		Console.log("handling '" + e.type + "' event");
 		triggerActions(e.type);
 	}
 	
