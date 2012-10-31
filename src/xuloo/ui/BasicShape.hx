@@ -79,17 +79,17 @@ class BasicShape extends UIComponent
 		return _backgroundOpacity;
 	}
 	
-	public var borderColour(getBorderColour, setBorderColour):Int;
+	public var borderColour(getBorderColour, setBorderColour):Float;
 	
-	var _borderColour:Int;	
-	public function getBorderColour():Int {
+	var _borderColour:Float;	
+	public function getBorderColour():Float {
 		return _borderColour;
 	}	
-	public function setBorderColour(value:Int):Int {
+	public function setBorderColour(value:Float):Float {
 		_borderColour = value;	
 		
-		drawInnerBorderSprite();
-		drawBorderSprite();
+		//drawInnerBorderSprite();
+		//drawBorderSprite();
 		
 		return _borderColour;
 	}
@@ -226,7 +226,7 @@ class BasicShape extends UIComponent
 		
 		surface.clear();
 		surface.lineStyle();
-		surface.beginFill(_borderColour);
+		surface.beginFill(cast(_borderColour, Int));
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
