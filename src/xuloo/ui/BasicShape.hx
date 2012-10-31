@@ -88,8 +88,8 @@ class BasicShape extends UIComponent
 	public function setBorderColour(value:Float):Float {
 		_borderColour = value;	
 		
-		//drawInnerBorderSprite();
-		//drawBorderSprite();
+		drawInnerBorderSprite();
+		drawBorderSprite();
 		
 		return _borderColour;
 	}
@@ -174,6 +174,7 @@ class BasicShape extends UIComponent
 	public override function initialize():Void {	
 		_borderThickness = 0;
 		_backgroundColour = 0;
+		_borderColour = 0;
 		
 		_borderSprite = new Sprite();
 		_borderSprite.name = "Border Sprite";
