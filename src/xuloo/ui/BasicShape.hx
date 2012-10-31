@@ -52,15 +52,15 @@ class BasicShape extends UIComponent
 		return _h;
 	}
 	
-	public var backgroundColour(getBackgroundColour, setBackgroundColour):Int;
+	public var backgroundColour(getBackgroundColour, setBackgroundColour):Float;
 			
-	var _backgroundColour:Int;	
-	public function getBackgroundColour():Int {
+	var _backgroundColour:Float;	
+	public function getBackgroundColour():Float {
 		return _backgroundColour;
 	}	
-	public function setBackgroundColour(value:Int):Int {
+	public function setBackgroundColour(value:Float):Float {
 		_backgroundColour = value;		
-		
+		Console.log("drawing background with colour " + value);
 		drawBackgroundSprite();
 		
 		return _backgroundColour;
@@ -173,7 +173,7 @@ class BasicShape extends UIComponent
 	
 	public override function initialize():Void {	
 		_borderThickness = 0;
-		_backgroundColour = 0xffcc00;
+		_backgroundColour = 0;
 		
 		_borderSprite = new Sprite();
 		_borderSprite.name = "Border Sprite";
@@ -211,7 +211,7 @@ class BasicShape extends UIComponent
 			
 		surface.clear();
 		surface.lineStyle();
-		surface.beginFill(_backgroundColour);
+		surface.beginFill(cast(_backgroundColour, Int));
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
@@ -242,7 +242,7 @@ class BasicShape extends UIComponent
 		
 		surface.clear();
 		surface.lineStyle();
-		surface.beginFill(_backgroundColour);
+		surface.beginFill(cast(_backgroundColour, Int));
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0)
 		{
