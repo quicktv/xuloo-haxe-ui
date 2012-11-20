@@ -34,6 +34,8 @@ class BasicShape extends UIComponent
 	public override function setWidth(value:Float):Float {
 		super.setWidth(_w =  value);
 
+		Console.log("setting width " + value);
+
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
 		drawBorderSprite();
@@ -44,6 +46,8 @@ class BasicShape extends UIComponent
 	var _h:Float;	
 	public override function setHeight(value:Float):Float {
 		super.setHeight(_h = value);
+
+		Console.log("setting height " + value);
 
 		drawBackgroundSprite();
 		drawInnerBorderSprite();
@@ -60,7 +64,6 @@ class BasicShape extends UIComponent
 	}	
 	public function setBackgroundColour(value:Float):Float {
 		_backgroundColour = value;		
-		Console.log("drawing background with colour " + value);
 		drawBackgroundSprite();
 		
 		return _backgroundColour;
@@ -87,6 +90,8 @@ class BasicShape extends UIComponent
 	}	
 	public function setBorderColour(value:Float):Float {
 		_borderColour = value;	
+
+		Console.log("setting border colour " + value);
 		
 		drawInnerBorderSprite();
 		drawBorderSprite();
@@ -102,6 +107,7 @@ class BasicShape extends UIComponent
 	}
 	public function setBorderThickness(value:Float):Float {
 		_borderThickness = value;
+		Console.log("setting border thickness " + value);
 		drawBorderSprite();
 		drawInnerBorderSprite();
 		return _borderThickness;
@@ -173,7 +179,7 @@ class BasicShape extends UIComponent
 	
 	public override function initialize():Void {	
 		_borderThickness = 0;
-		_backgroundColour = 0;
+		_backgroundColour = 0xffffff;
 		_borderColour = 0;
 		
 		_borderSprite = new Sprite();
@@ -190,11 +196,10 @@ class BasicShape extends UIComponent
 		#if flash
 		_borderSprite.blendMode = flash.display.BlendMode.LAYER;
 		_innerBorderSprite.blendMode = flash.display.BlendMode.ERASE;
-		#end
-		/*#elseif js
-		//_borderSprite.blendMode = jeash.display.BlendMode.LAYER;
-		//_innerBorderSprite.blendMode = jeash.display.BlendMode.ERASE;
-		#end*/	
+		#elseif js
+		_borderSprite.blendMode = jeash.display.BlendMode.LAYER;
+		_innerBorderSprite.blendMode = jeash.display.BlendMode.ERASE;
+		#end	
 		
 		//drawBackgroundSprite();
 		//drawBorderSprite();
@@ -222,7 +227,7 @@ class BasicShape extends UIComponent
 	}
 	
 	public function drawBorderSprite():Void {
-		#if flash
+		//#if flash
 		var surface:Graphics = _borderSprite.graphics;
 		
 		surface.clear();
@@ -234,11 +239,11 @@ class BasicShape extends UIComponent
 		}
 		
 		surface.endFill();
-		#end
+		//#end
 	}
 	
 	public function drawInnerBorderSprite():Void {		
-		#if flash	
+		//#if flash	
 		var surface:Graphics = _innerBorderSprite.graphics;
 		
 		surface.clear();
@@ -251,6 +256,6 @@ class BasicShape extends UIComponent
 		}
 		
 		surface.endFill();
-		#end
+		//#end
 	}
 }

@@ -6,9 +6,9 @@ import flash.events.Event;
 import flash.text.TextField;
 
 class TextComponentBase extends UIComponent {
-	public var backgroundSprite(getBackgroundSprite, never) : Sprite;
-	public var borderSprite(getBorderSprite, never) : Sprite;
-	public var innerBorderSprite(getInnerBorderSprite, never) : Sprite;
+
+	var _shape:BasicShape;
+
 	public var textOpacity(getTextOpacity, setTextOpacity) : Float;
 	public var font(getFont, setFont) : String;
 	public var size(getSize, setSize) : Float;
@@ -16,44 +16,25 @@ class TextComponentBase extends UIComponent {
 	public var bold(getBold, setBold) : Bool;
 	public var italic(getItalic, setItalic) : Bool;
 	public var underline(getUnderline, setUnderline) : Bool;
-	public var backgroundColour(getBackgroundColour, setBackgroundColour) : Int;
+	public var backgroundColour(getBackgroundColour, setBackgroundColour) : Float;
 	public var backgroundOpacity(getBackgroundOpacity, setBackgroundOpacity) : Float;
-	public var borderColour(getBorderColour, setBorderColour) : Int;
+	public var borderColour(getBorderColour, setBorderColour) : Float;
 	public var borderThickness(getBorderThickness, setBorderThickness) : Float;
 	public var borderOpacity(getBorderOpacity, setBorderOpacity) : Float;
 	public var textField(getTextField, never) : TextField;
 	public var text(getText, setText) : String;
 	public var colour(getColour, setColour) : Int;
 
-	var _backgroundSprite : Sprite;
-	public function getBackgroundSprite() : Sprite {
-		return _backgroundSprite;
-	}
-
-	var _borderSprite : Sprite;
-	public function getBorderSprite() : Sprite {
-		return _borderSprite;
-	}
-
-	var _innerBorderSprite : Sprite;
-	public function getInnerBorderSprite() : Sprite {
-		return _innerBorderSprite;
-	}
-
 	override public function setWidth(value : Float) : Float {
 		super.setWidth(value);
-		drawBackgroundSprite();
-		drawInnerBorderSprite();
-		drawBorderSprite();
+		_shape.width = value;
 		if(_textField != null) _textField.width = value;
 		return value;
 	}
 
 	override public function setHeight(value : Float) : Float {
 		super.setHeight(value);
-		drawBackgroundSprite();
-		drawInnerBorderSprite();
-		drawBorderSprite();
+		_shape.height = value;
 		if(_textField != null) _textField.height = value;
 		return value;
 	}
@@ -135,61 +116,44 @@ class TextComponentBase extends UIComponent {
 		return value;
 	}
 
-	var _backgroundColour : Int;
-	public function getBackgroundColour() : Int {
-		return _backgroundColour;
+	public function getBackgroundColour() : Float {
+		return _shape.backgroundColour;
 	}
 
-	public function setBackgroundColour(value : Int) : Int {
-		_backgroundColour = value;
-		drawBackgroundSprite();
-		return value;
+	public function setBackgroundColour(value : Float) : Float {
+		return _shape.backgroundColour = value;
 	}
 
-	var _backgroundOpacity : Float;
 	public function getBackgroundOpacity() : Float {
-		return _backgroundOpacity;
+		return _shape.backgroundOpacity;
 	}
 
 	public function setBackgroundOpacity(value : Float) : Float {
-		_backgroundOpacity = value;
-		_backgroundSprite.alpha = value;
-		return value;
+		return _shape.backgroundOpacity = value;
 	}
 
-	var _borderColour : Int;
-	public function getBorderColour() : Int {
-		return _borderColour;
+	public function getBorderColour() : Float {
+		return _shape.borderColour;
 	}
 
-	public function setBorderColour(value : Int) : Int {
-		_borderColour = value;
-		drawInnerBorderSprite();
-		drawBorderSprite();
-		return value;
+	public function setBorderColour(value : Float) : Float {
+		return _shape.borderColour = value;
 	}
 
-	var _borderThickness : Float;
 	public function getBorderThickness() : Float {
-		return _borderThickness;
+		return _shape.borderThickness;
 	}
 
 	public function setBorderThickness(value : Float) : Float {
-		_borderThickness = value;
-		//drawBorderSprite()
-		drawInnerBorderSprite();
-		return value;
+		return _shape.borderThickness = value;
 	}
 
-	var _borderOpacity : Float;
 	public function getBorderOpacity() : Float {
-		return _borderOpacity;
+		return _shape.borderOpacity;
 	}
 
 	public function setBorderOpacity(value : Float) : Float {
-		_borderOpacity = value;
-		_borderSprite.alpha = value;
-		return value;
+		return _shape.borderOpacity = value;
 	}
 
 	var _textField : TextField;
@@ -224,17 +188,9 @@ class TextComponentBase extends UIComponent {
 	}
 
 	public function new() {
-		_backgroundSprite = new Sprite();
-		_borderSprite = new Sprite();
-		_innerBorderSprite = new Sprite();
-		_font = "Helvetica";
-		_size = 16;
-		_align = "left";
-		_backgroundColour = 0xffffff;
-		_borderThickness = 0;
-		_colour = 0x0;
 		super();
-		initialise();
+
+		addChild(_shape = new BasicShape());
 	}
 
 	public function initialise() : Void {
@@ -242,17 +198,6 @@ class TextComponentBase extends UIComponent {
 		_textField.multiline = true;
 		_textField.wordWrap = true;
 		_textField.selectable = false;
-		//_textField.styleSheet = new StyleSheet();
-		//width = _textField.width = 200;
-		//height = _textField.height = 100;
-		_borderSprite.blendMode = BlendMode.LAYER;
-		_innerBorderSprite.blendMode = BlendMode.ERASE;
-		drawBackgroundSprite();
-		drawBorderSprite();
-		drawInnerBorderSprite();
-		sprite.addChild(_backgroundSprite);
-		sprite.addChild(_borderSprite);
-		_borderSprite.addChild(_innerBorderSprite);
 		sprite.addChild(_textField);
 		//dispatchEvent(new Event(Event.COMPLETE));
 	}
@@ -268,33 +213,6 @@ class TextComponentBase extends UIComponent {
             tf.align = align;
 
             _textField.setTextFormat( _textField.defaultTextFormat = tf );*/
-	}
-
-	public function drawBackgroundSprite() : Void {
-		_backgroundSprite.graphics.clear();
-		_backgroundSprite.graphics.beginFill(_backgroundColour);
-		_backgroundSprite.graphics.drawRect(0, 0, width, height);
-		_backgroundSprite.graphics.endFill();
-	}
-
-	public function drawBorderSprite() : Void {
-		_borderSprite.graphics.clear();
-		_borderSprite.graphics.beginFill(_borderColour);
-		_borderSprite.graphics.drawRect(0, 0, width, height);
-		_borderSprite.graphics.endFill();
-	}
-
-	public function drawInnerBorderSprite(value : Bool = true) : Void {
-		if(value)  {
-			_innerBorderSprite.graphics.clear();
-			_innerBorderSprite.graphics.beginFill(0xff0000);
-			_innerBorderSprite.graphics.drawRect(_borderThickness / 2, _borderThickness / 2, width - (_borderThickness), height - (_borderThickness));
-			_innerBorderSprite.graphics.endFill();
-		}
-		_textField.width = width - (borderThickness);
-		_textField.height = height - (borderThickness);
-		_textField.x = borderThickness / 2;
-		_textField.y = borderThickness / 2;
 	}
 
 }
