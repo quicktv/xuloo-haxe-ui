@@ -215,6 +215,8 @@ class BasicShape extends UIComponent
 	public function drawBackgroundSprite():Void {
 		var surface:Graphics = _backgroundSprite.graphics;
 			
+		Console.log("drawing background sprite " + _w + "x" + _h);
+
 		surface.clear();
 		surface.lineStyle();
 		surface.beginFill(cast(_backgroundColour, Int));
@@ -227,7 +229,7 @@ class BasicShape extends UIComponent
 	}
 	
 	public function drawBorderSprite():Void {
-		//#if flash
+		#if flash
 		var surface:Graphics = _borderSprite.graphics;
 		
 		surface.clear();
@@ -239,11 +241,11 @@ class BasicShape extends UIComponent
 		}
 		
 		surface.endFill();
-		//#end
+		#end
 	}
 	
 	public function drawInnerBorderSprite():Void {		
-		//#if flash	
+		#if flash	
 		var surface:Graphics = _innerBorderSprite.graphics;
 		
 		surface.clear();
@@ -256,6 +258,6 @@ class BasicShape extends UIComponent
 		}
 		
 		surface.endFill();
-		//#end
+		#end
 	}
 }
