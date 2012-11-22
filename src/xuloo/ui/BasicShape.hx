@@ -7,8 +7,6 @@ import flash.geom.Rectangle;
 
 class BasicShape extends UIComponent
 {
-	public var borderColour(getBorderColour, setBorderColour):Float;
-
 	var _renderer:IShapeRenderer;
 	
 	public var backgroundSprite(getBackgroundSprite, never):Sprite;
@@ -170,8 +168,8 @@ class BasicShape extends UIComponent
 		width = 200;
 		height = 100;
 		
-		sprite.addChild(_backgroundSprite);
 		sprite.addChild(_borderSprite);
+		sprite.addChild(_backgroundSprite);
 	}
 	
 	public function drawBackgroundSprite():Void {
@@ -192,8 +190,10 @@ class BasicShape extends UIComponent
 		//#if flash
 		var surface:Graphics = _borderSprite.graphics;
 		
+		Console.log("drawing a border of thickness " + _borderThickness + " of colour " + cast(_borderColour, Int));
+
 		surface.clear();
-		surface.lineStyle(_borderThickness, _borderColour);
+		surface.lineStyle(_borderThickness, cast(_borderColour, Int));
 		surface.beginFill(0, 0);
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
