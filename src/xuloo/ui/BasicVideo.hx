@@ -71,6 +71,7 @@ class BasicVideo extends BasicShape {
 		_aspectRatio = value.width / value.height;
 		_player.video = _source = value;
 		_player.init();
+
 		if (_player.isReady)  {
 			Console.log("video is already ready");
 			onPlayerReady();
