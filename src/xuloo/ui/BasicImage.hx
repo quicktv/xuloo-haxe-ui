@@ -22,9 +22,8 @@ import qtv.operations.api.IOperation;
 
 class BasicImage extends UIComponent {
 	public var source(getSource, setSource) : Dynamic;
-	//public var link(getLink, setLink) : String;
+
 	public var target(getTarget, setTarget) : String;
-	//public var tooltip(getTooltip, setTooltip) : String;
 
 	/**
 	 * Setting up external link reference.
@@ -72,51 +71,6 @@ class BasicImage extends UIComponent {
 		loader = new Loader();
 	}
 
-	//function invalidateLink() : Void {
-		/*var isLink:Boolean = isValidLink( _link );
-		if( isLink )
-		{
-		if( !hasEventListener( MouseEvent.CLICK ) )
-		addEventListener( MouseEvent.CLICK, handleClick, false, 0, true );
-		buttonMode = useHandCursor = true;
-		}
-		else
-		{
-		if( hasEventListener( MouseEvent.CLICK ) )
-		removeEventListener( MouseEvent.CLICK, handleClick, false );
-		}*/
-	//}
-
-	//function invalidateTooltip() : Void {
-		/*var isTooltip:Boolean = isValidTooltip( _tooltip );
-		if( isTooltip )
-		{
-		_tooltipArea.text = _tooltip;
-		if( !hasEventListener( MouseEvent.ROLL_OVER ) )
-		{
-		addEventListener( MouseEvent.ROLL_OVER, handleRollOver, false, 0, true );
-		addEventListener( MouseEvent.ROLL_OUT, handleRollOut, false, 0, true );
-		}
-		buttonMode = useHandCursor = true;
-		}
-		else
-		{
-		if( hasEventListener( MouseEvent.ROLL_OVER ) )
-		{
-		removeEventListener( MouseEvent.ROLL_OVER, handleRollOver, false );
-		removeEventListener( MouseEvent.ROLL_OUT, handleRollOut, false );
-		}
-		}*/
-	//}
-
-	/*function isValidLink(link : String) : Bool {
-		return (link != null && link != "");
-	}*/
-
-	/*function isValidTooltip(tooltip : String) : Bool {
-		return (tooltip != null && tooltip != "");
-	}*/
-
 	/**
 	 * Overrides the default operation registration.
 	 * We want to give the user feedback that a mouse operation is available.
@@ -130,15 +84,6 @@ class BasicImage extends UIComponent {
 		}
 	}
 
-	/*override public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
-	{
-	super.addEventListener( type, listener, useCapture, priority, useWeakReference );
-	if( type.toLowerCase().indexOf( "mouse" ) || type.toLowerCase().indexOf( "click" ) || type.toLowerCase().indexOf( "roll" ) )
-	{
-	mouseChildren = false;
-	useHandCursor = buttonMode = true;
-	}
-	}*/
 	/**
         * When image loads, re-set the width and height of this Sprite to either
         * the explicit values or to the image's own size.
@@ -160,22 +105,6 @@ class BasicImage extends UIComponent {
 	function handleLoadStatus(evt : HTTPStatusEvent) : Void {
 		if(evt.status != 200) { }
 	}
-
-	/*public function handleClick(evt : MouseEvent) : Void {
-		if(!context.editing)  {
-			navigateToURL(new URLRequest(_link), _target);
-		}
-	}*/
-
-	/*public function handleRollOver(evt : MouseEvent) : Void {
-		_tooltipArea.x = Math.max(10, Math.min(stage.stageWidth - _tooltipArea.width - 10, x + 10));
-		_tooltipArea.y = Math.max(10, Math.min(stage.stageHeight - _tooltipArea.height - 10, y + -_tooltipArea.height - 4));
-		stage.addChild(_tooltipArea);
-	}*/
-
-	/*public function handleRollOut(evt : MouseEvent) : Void {
-		sprite.stage.removeChild(_tooltipArea);
-	}*/
 
 	/**
         * Override width property so that we can tell if width has been explicitly set.
@@ -243,23 +172,9 @@ class BasicImage extends UIComponent {
         * To set current source and it load the image into loader
         */
 	public function setSource(value : Dynamic) : Dynamic {
-		//if(dataComponent == null)  {
-			doSetSource(value);
-		//}
-
-		/*else  {
-			_sourceKey = value;
-			dataComponent.addEventListener(Event.COMPLETE, dataLoaded, false, 0, true);
-			dataComponent.loadData();
-		}
-*/
+		doSetSource(value);
 		return value;
 	}
-
-	/*function dataLoaded(event : Event = null) : Void {
-		if(dataComponent.hasEventListener(Event.COMPLETE)) dataComponent.removeEventListener(Event.COMPLETE, dataLoaded);
-		doSetSource(dataComponent.getValue(_sourceKey));
-	}*/
 
 	function doSetSource(value : Dynamic) : Void {
 		if(Std.is(value, String))  {
@@ -284,20 +199,6 @@ class BasicImage extends UIComponent {
 	}
 
 	/**
-	 * Sets the link to follow upon click of instance. 
-	 * @return String
-	 *//*
-	public function getLink() : String {
-		return _link;
-	}*/
-
-	/*public function setLink(value : String) : String {
-		_link = value;
-		invalidateLink();
-		return value;
-	}*/
-
-	/**
 	 * Sets up the target window for the link to open into.
 	 * @return String
 	 */
@@ -306,35 +207,7 @@ class BasicImage extends UIComponent {
 	}
 
 	public function setTarget(value : String) : String {
-		_target = value;
-		//invalidateLink();
-		return value;
+		return _target = value;
 	}
-
-	/**
-	 * Sets the textual context for a tooltip. 
-	 * @return String
-	 */
-	/*public function getTooltip() : String {
-		return _tooltip;
-	}*/
-
-	/*public function setTooltip(value : String) : String {
-		_tooltip = value;
-		invalidateTooltip();
-		return value;
-	}*/
-
-	/*override public function applyPropertyValue(name : Dynamic, value : Dynamic) : Void {
-		*//*if (name == "source")
-		{
-		dataComponent.applyPropertyValue(name, value, this).execute();
-		}
-		else
-		{*/
-		//super.applyPropertyValue(name, value);
-		/*}*//*
-	}*/
-
 }
 

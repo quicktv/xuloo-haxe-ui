@@ -175,6 +175,7 @@ class UIComponent implements IEventDispatcher
 		if (_plugins.exists(plugin.name)) {
 			_plugins.remove(plugin.name);
 		}
+		Console.log("adding plugin with name '" + plugin.name + "'");
 		_plugins.set(plugin.name, plugin);
 	}
 	

@@ -7,7 +7,7 @@ package xuloo.ui;
 
 class UIComponentPlugin 
 {
-	public var instanceName(getName, setName):String;
+	public var instanceName(default, default):String;
 	public var name(getName, setName):String;
 	
 	var _name:String;

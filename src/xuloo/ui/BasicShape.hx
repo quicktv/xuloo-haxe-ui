@@ -145,7 +145,8 @@ class BasicShape extends UIComponent
 		return value;
 	}
 	
-	override function render():Void {		
+	override function render():Void {	
+		super.render();	
 		drawBackgroundSprite();
 		drawBorderSprite();
 	}
@@ -187,10 +188,9 @@ class BasicShape extends UIComponent
 	}
 	
 	public function drawBorderSprite():Void {
-		//#if flash
 		var surface:Graphics = _borderSprite.graphics;
 		
-		Console.log("drawing a border of thickness " + _borderThickness + " of colour " + cast(_borderColour, Int));
+		//Console.log("drawing a border of thickness " + _borderThickness + " of colour " + cast(_borderColour, Int));
 
 		surface.clear();
 		surface.lineStyle(_borderThickness, cast(_borderColour, Int));
@@ -201,23 +201,5 @@ class BasicShape extends UIComponent
 		}
 		
 		surface.endFill();
-		//#end
 	}
-	
-	/*public function drawInnerBorderSprite():Void {		
-		#if flash	
-		var surface:Graphics = _innerBorderSprite.graphics;
-		
-		surface.clear();
-		surface.lineStyle();
-		surface.beginFill(cast(_backgroundColour, Int));
-		
-		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0)
-		{
-			_renderer.render(surface, new Rectangle(_borderThickness/2, _borderThickness/2, width - (_borderThickness), height - (_borderThickness)));
-		}
-		
-		surface.endFill();
-		#end
-	}*/
 }
