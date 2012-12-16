@@ -92,7 +92,6 @@ class BasicVideo extends BasicShape {
 	}
 
 	function onPlayerReady() : Void {
-		Console.log("player ready");
 		updateVideoDimensions();
 		dispatchEvent(new Event(Event.COMPLETE));
 		_isReady = true;

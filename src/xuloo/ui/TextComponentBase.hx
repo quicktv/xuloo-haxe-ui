@@ -25,6 +25,11 @@ class TextComponentBase extends UIComponent {
 	public var text(getText, setText) : String;
 	public var colour(getColour, setColour) : Int;
 
+	override public function setAlpha(value:Float):Float { 
+		_shape.alpha = value;
+		return super.setAlpha(value); 
+	}
+
 	override public function setWidth(value : Float) : Float {
 		super.setWidth(value);
 		_shape.width = value;
