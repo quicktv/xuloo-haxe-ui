@@ -197,7 +197,7 @@ class BasicShape extends UIComponent
 		surface.beginFill(0, 0);
 		
 		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
-			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
+			_renderer.render(surface, new Rectangle(1, 1, _w - 2, _h - 2));
 		}
 		
 		surface.endFill();
