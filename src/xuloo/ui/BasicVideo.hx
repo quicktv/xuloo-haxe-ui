@@ -66,7 +66,7 @@ class BasicVideo extends BasicShape {
 	 * To set current source and it load the image into loader
 	 */
 	public function setSource(value : VideoModel) : VideoModel {
-		Console.log("setting source for the video to " + value + " " + _player);
+		Console.log("setting source for the video to " + value + " " + _player.isReady);
 		
 		_aspectRatio = value.width / value.height;
 		_player.video = _source = value;

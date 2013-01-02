@@ -91,7 +91,7 @@ class UIComponent implements IEventDispatcher
     public function willTrigger(type : String) : Bool {
     	return _sprite.willTrigger(type);
     }
-    
+
     var _children:Array<UIComponent>;
 	
 	public function addChild(value:UIComponent):Void {
@@ -120,7 +120,6 @@ class UIComponent implements IEventDispatcher
 	}
 	
 	public var active(getActive, setActive):Bool;
-	public var includeInLayout(default, default):Bool;
 	
 	var _active:Bool;
 	public function getActive():Bool {
@@ -130,6 +129,16 @@ class UIComponent implements IEventDispatcher
 		_active = value;
 		visible = value;
 		return _active;
+	}
+
+	public var includeInLayout(getIncludeInLayout, setIncludeInLayout):Bool;
+
+	var _includeInLayout:Bool;
+	function getIncludeInLayout():Bool {
+		return _includeInLayout = _active;
+	}
+	function setIncludeInLayout(value:Bool):Bool {
+		return _includeInLayout = setActive(value);
 	}
 	
 	var _ready:Signal0;
