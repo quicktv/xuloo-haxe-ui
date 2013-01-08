@@ -157,7 +157,7 @@ class BasicShape extends UIComponent
 	
 	public override function initialize():Void {	
 		_borderThickness = 0;
-		_backgroundColour = 0xffffff;
+		_backgroundColour = 0xffcc00;
 		_borderColour = 0;
 		
 		_borderSprite = new Sprite();

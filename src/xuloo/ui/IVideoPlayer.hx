@@ -29,5 +29,10 @@ interface IVideoPlayer implements IVideoController
 	function getOnPause():Signal0;
 	function getOnStop():Signal0;	
 	
+	function setWidth(value:Float):Float;
+	function getWidth():Float;
+	function setHeight(value:Float):Float;
+	function getHeight():Float;
+	
 	function init():Void;
 }

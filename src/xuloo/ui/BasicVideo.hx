@@ -32,12 +32,14 @@ class BasicVideo extends BasicShape {
 	var _video : VideoModel;
 	
 	override public function setWidth(value : Float) : Float {
+		Console.log("setting WIDTH " + value);
 		super.setWidth(value);
 		updateVideoDimensions();
 		return value;
 	}
 
 	override public function setHeight(value : Float) : Float {
+		Console.log("setting HEIGHT " + value);
 		super.setHeight(value);
 		updateVideoDimensions();
 		return value;
@@ -101,6 +103,9 @@ class BasicVideo extends BasicShape {
 	function updateVideoDimensions() : Void {
 
 		if(_player != null)  {
+
+			Console.log("updating video dimensions " + _w + " " + _h);
+
 			var videoDisplay : DisplayObject = cast(_player, DisplayObject);
 			var myAspect : Float = _w / _h;
 
@@ -114,12 +119,19 @@ class BasicVideo extends BasicShape {
 				playerWidth = _h * _aspectRatio;
 			}
 			
-			Console.log(_w + " " + _h + " " + _aspectRatio + " " + playerWidth + " " + playerHeight);
+			Console.log(_player + " " + _w + " " + _h + " " + _aspectRatio + " " + playerWidth + " " + playerHeight);
 
 			videoDisplay.x = (_w - playerWidth) / 2;
 			videoDisplay.y = (_h - playerHeight) / 2;
-			videoDisplay.width = playerWidth;
-			videoDisplay.height = playerHeight;
+			//videoDisplay.width = playerWidth;
+			//videoDisplay.height = playerHeight;
+
+			Console.log("got here");
+
+			_player.setWidth(playerWidth);
+			_player.setHeight(playerHeight);
+
+			Console.log("resulting dimensions " + width + " " + height + " " + videoDisplay.width + " " + videoDisplay.height);
 		}
 	}
 
