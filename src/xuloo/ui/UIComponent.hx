@@ -54,11 +54,11 @@ class UIComponent implements IEventDispatcher
 	
 	public var width(getWidth, setWidth):Float;
 	public function getWidth():Float { return _sprite.width; }
-	public function setWidth(value:Float):Float { return /*_sprite.width = */value; }
+	public function setWidth(value:Float):Float { return value; }
 	
 	public var height(getHeight, setHeight):Float;
 	public function getHeight():Float { return _sprite.height; }
-	public function setHeight(value:Float):Float { return /*_sprite.height = */value; }
+	public function setHeight(value:Float):Float { return value; }
 	
 	public var x (getX, setX):Float;
 	public function getX():Float { return _sprite.x; }
@@ -168,11 +168,6 @@ class UIComponent implements IEventDispatcher
 		_sprite = new Sprite();
 		_sprite.name = Type.getClassName(Type.getClass(this));
 		
-		/*_sprite.graphics.lineStyle();
-		_sprite.graphics.beginFill(0xffcc00);
-		_sprite.graphics.drawRect(0, 0, 100, 100);
-		_sprite.graphics.endFill();*/
-		
 		initialize();
 	}
 	
@@ -207,7 +202,6 @@ class UIComponent implements IEventDispatcher
 			addEventListener(action.event, handleEvent);
 			
 			if (action.event == "click") {
-				Console.log("adding a click event - adding the touch event");
 				addEventListener("touchBegin", handleEvent);
 			}
 		}

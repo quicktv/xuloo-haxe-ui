@@ -75,8 +75,6 @@ class BasicShape extends UIComponent
 	}	
 	public function setBorderColour(value:Float):Float {
 		_borderColour = value;	
-
-		Console.log("setting border colour " + value);
 		
 		render();
 		
@@ -157,7 +155,7 @@ class BasicShape extends UIComponent
 	
 	public override function initialize():Void {	
 		_borderThickness = 0;
-		_backgroundColour = 0xffcc00;
+		_backgroundColour = 0xffffff;
 		_borderColour = 0;
 		
 		_borderSprite = new Sprite();
@@ -189,8 +187,6 @@ class BasicShape extends UIComponent
 	
 	public function drawBorderSprite():Void {
 		var surface:Graphics = _borderSprite.graphics;
-		
-		//Console.log("drawing a border of thickness " + _borderThickness + " of colour " + cast(_borderColour, Int));
 
 		surface.clear();
 		surface.lineStyle(_borderThickness, cast(_borderColour, Int));

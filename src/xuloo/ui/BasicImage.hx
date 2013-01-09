@@ -89,20 +89,26 @@ class BasicImage extends UIComponent {
         * the explicit values or to the image's own size.
         */
 	public function handleLoadComplete(evt : Event) : Void {
+
 		var loaderInfo:LoaderInfo = cast(evt.target, LoaderInfo);
 		var content : DisplayObject = cast(loaderInfo.content, DisplayObject);
 		image = cast(loaderInfo.content, Bitmap);
+		sprite.addChild(image);
+
 		_width = (Math.isNaN(_width)) ? image.width : _width;
 		_height = (Math.isNaN(_height)) ? image.height : _height;
+
 		invalidateDimensions();
 		// Dispatch an event in case anyone (like the editor) was waiting for us figure out our dimensions.
 		dispatchEvent(new Event(Event.COMPLETE));
 	}
 
 	function handleLoadError(evt : IOErrorEvent) : Void {
+		Console.log("image load error " + evt);
 	}
 
 	function handleLoadStatus(evt : HTTPStatusEvent) : Void {
+		Console.log("image load status " + evt.status);
 		if(evt.status != 200) { }
 	}
 
@@ -136,6 +142,7 @@ class BasicImage extends UIComponent {
 	}
 
 	function invalidateDimensions() : Void {
+		Console.log("invalidating dimensions");
 		/*CONFIG::debug {
 		logger.debug("invalidating dimensions {0} {1}x{2}", [image, _width, _height]);
 		}*/
@@ -148,6 +155,7 @@ class BasicImage extends UIComponent {
 				_source.height = _height;
 			}
 		}
+		Console.log(image + " " + _width + " " + _height + " " + width + " " + height);
 		if(image != null)  {
 			if(!Math.isNaN(_width) && !Math.isNaN(_height))  {
 				var matrix : Matrix = new Matrix();
@@ -177,6 +185,7 @@ class BasicImage extends UIComponent {
 	}
 
 	function doSetSource(value : Dynamic) : Void {
+		Console.log("setting image source " + value);
 		if(Std.is(value, String))  {
 			var domain : String = ((value.indexOf("http://") == -1 && value.indexOf("https://") == -1)) ? context.serverContext : "";
 			_source = domain + value;

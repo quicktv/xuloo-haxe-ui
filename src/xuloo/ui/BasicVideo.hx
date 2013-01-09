@@ -32,14 +32,12 @@ class BasicVideo extends BasicShape {
 	var _video : VideoModel;
 	
 	override public function setWidth(value : Float) : Float {
-		Console.log("setting WIDTH " + value);
 		super.setWidth(value);
 		updateVideoDimensions();
 		return value;
 	}
 
 	override public function setHeight(value : Float) : Float {
-		Console.log("setting HEIGHT " + value);
 		super.setHeight(value);
 		updateVideoDimensions();
 		return value;
@@ -68,8 +66,6 @@ class BasicVideo extends BasicShape {
 	 * To set current source and it load the image into loader
 	 */
 	public function setSource(value : VideoModel) : VideoModel {
-		Console.log("setting source for the video to " + value + " " + _player.isReady);
-		
 		_aspectRatio = value.width / value.height;
 		_player.video = _source = value;
 		_player.init();
@@ -104,8 +100,6 @@ class BasicVideo extends BasicShape {
 
 		if(_player != null)  {
 
-			Console.log("updating video dimensions " + _w + " " + _h);
-
 			var videoDisplay : DisplayObject = cast(_player, DisplayObject);
 			var myAspect : Float = _w / _h;
 
@@ -123,10 +117,6 @@ class BasicVideo extends BasicShape {
 
 			videoDisplay.x = (_w - playerWidth) / 2;
 			videoDisplay.y = (_h - playerHeight) / 2;
-			//videoDisplay.width = playerWidth;
-			//videoDisplay.height = playerHeight;
-
-			Console.log("got here");
 
 			_player.setWidth(playerWidth);
 			_player.setHeight(playerHeight);
