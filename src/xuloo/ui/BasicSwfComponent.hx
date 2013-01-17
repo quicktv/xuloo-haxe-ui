@@ -1,5 +1,7 @@
 package xuloo.ui;
 
+
+#if flash
 import flash.display.AVM1Movie;
 import flash.display.Bitmap;
 import flash.display.DisplayObject;
@@ -21,10 +23,22 @@ import qtv.operations.api.IOperation;
 
 import xuloo.ui.IQtvSwfAsset;
 import xuloo.ui.ISWF;
+#end
 import xuloo.ui.UIComponent;
 
 class BasicSwfComponent extends UIComponent {
+
+	var _source : Dynamic;
 	public var source(getSource, setSource) : Dynamic;
+
+	/**
+	 * To get current source ,path of image
+	 */
+	public function getSource() : Dynamic {
+		return _source;
+	}
+
+	#if flash
 
 	/**
 	 * Setting up loader instance.
@@ -41,11 +55,7 @@ class BasicSwfComponent extends UIComponent {
 	 * @private 
 	 */
 	public var movieClip : ISWF;
-	/**
-	 * Setting up source for image to load in loader object
-	 * @private 
-	 */
-	var _source : Dynamic;
+	
 	/**
 	 * Override width property so that we can tell if width has been explicitly set
 	 * @private 
@@ -60,6 +70,7 @@ class BasicSwfComponent extends UIComponent {
 	var originalDimensions : Rectangle;
 	var loaderScaleX : Float;
 	var loaderScaleY : Float;
+
 	public function new() {
 		super();
 
@@ -135,12 +146,6 @@ class BasicSwfComponent extends UIComponent {
 	}
 
 	var _sourceKey : Dynamic;
-	/**
-	 * To get current source ,path of image
-	 */
-	public function getSource() : Dynamic {
-		return _source;
-	}
 
 	/**
 	 * To set current source and it load the image into loader
@@ -213,6 +218,17 @@ class BasicSwfComponent extends UIComponent {
 		
 		return super.setActive(value);
 	}
+	#elseif js
+
+	public function new() {
+		super();
+	}
+
+	public function setSource(value : Dynamic) : Dynamic {
+		return _source = value;
+	}
+
+	#end
 
 }
 
