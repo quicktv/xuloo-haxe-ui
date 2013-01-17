@@ -93,7 +93,7 @@ class BasicImage extends UIComponent {
 		var loaderInfo:LoaderInfo = cast(evt.target, LoaderInfo);
 		var content : DisplayObject = cast(loaderInfo.content, DisplayObject);
 		image = cast(loaderInfo.content, Bitmap);
-		sprite.addChild(image);
+		//sprite.addChild(image);
 
 		_width = (Math.isNaN(_width)) ? image.width : _width;
 		_height = (Math.isNaN(_height)) ? image.height : _height;
