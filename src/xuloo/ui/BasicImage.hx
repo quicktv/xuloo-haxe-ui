@@ -187,8 +187,7 @@ class BasicImage extends UIComponent {
 	function doSetSource(value : Dynamic) : Void {
 		Console.log("setting image source " + value);
 		if(Std.is(value, String))  {
-			var domain : String = ((value.indexOf("http://") == -1 && value.indexOf("https://") == -1)) ? context.serverContext : "";
-			_source = domain + value;
+			_source = value;
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoadComplete, false, 0, true);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, handleLoadError, false, 0, true);
 			loader.contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleLoadStatus, false, 0, true);
