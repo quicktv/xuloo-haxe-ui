@@ -181,6 +181,7 @@ class UIComponent implements IEventDispatcher
 		}
 		Console.log("adding plugin with name '" + plugin.name + "'");
 		_plugins.set(plugin.name, plugin);
+		Console.log("plugin added");
 	}
 	
 	public function getPlugin(name:String):UIComponentPlugin {
@@ -249,7 +250,7 @@ class UIComponent implements IEventDispatcher
 	Updates platform specific properties and state
 	*/
 	public function render():Void {
-		
+
 		for (plugin in _plugins) {
 			plugin.resolve(this);
 		}
