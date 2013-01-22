@@ -108,7 +108,16 @@ class UIComponent implements IEventDispatcher
 	
 	public var interactiveLayer(default, default):IInteractiveLayer;
 	
-	public var instanceName(default, default):String;
+	var _instanceName:String;
+	public var instanceName(getInstanceName, setInstanceName):String;
+
+	public function getInstanceName():String {
+		return _instanceName;
+	}
+	public function setInstanceName(value:String):String {
+		//Console.log("setting instance name to " + value + " (" + includeInLayout + ")");
+		return _instanceName = value;
+	}
 	
 	public var context(getContext, setContext):IComponentContext;
 	var _context:IComponentContext;
@@ -126,8 +135,12 @@ class UIComponent implements IEventDispatcher
 		return _active;
 	}
 	public function setActive(value:Bool):Bool {
-		_active = value;
-		visible = value;
+		if (value != _active) {
+			//Console.log("setting target active to " + value + " for " + this);
+			if (value) alpha = 0;
+			return _active = visible = value;
+		}
+
 		return _active;
 	}
 
@@ -135,9 +148,10 @@ class UIComponent implements IEventDispatcher
 
 	var _includeInLayout:Bool;
 	function getIncludeInLayout():Bool {
-		return _includeInLayout = _active;
+		return _includeInLayout;
 	}
 	function setIncludeInLayout(value:Bool):Bool {
+		//Console.log("setting includeInLayout to " + value + " for " + this);
 		return _includeInLayout = setActive(value);
 	}
 	
@@ -179,9 +193,8 @@ class UIComponent implements IEventDispatcher
 		if (_plugins.exists(plugin.name)) {
 			_plugins.remove(plugin.name);
 		}
-		Console.log("adding plugin with name '" + plugin.name + "'");
+		//Console.log("adding plugin with name '" + plugin.name + "'");
 		_plugins.set(plugin.name, plugin);
-		Console.log("plugin added");
 	}
 	
 	public function getPlugin(name:String):UIComponentPlugin {
@@ -209,8 +222,12 @@ class UIComponent implements IEventDispatcher
 	}
 	
 	public function handleEvent(e:Event):Void {
-		Console.log("handling '" + e.type + "' event");
-		triggerActions(e.type);
+		if (active) {
+			//Console.log("handling '" + e.type + "' event");
+			triggerActions(e.type);
+		} else {
+			Console.log("not handling event '" + e.type + "' component is NOT active");
+		}
 	}
 	
 	public function triggerActions(event:String):Void {
