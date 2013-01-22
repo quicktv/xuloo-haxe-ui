@@ -137,7 +137,6 @@ class UIComponent implements IEventDispatcher
 	public function setActive(value:Bool):Bool {
 		if (value != _active) {
 			//Console.log("setting target active to " + value + " for " + this);
-			if (value) alpha = 0;
 			return _active = visible = value;
 		}
 
