@@ -135,6 +135,7 @@ class UIComponent implements IEventDispatcher
 		return _active;
 	}
 	public function setActive(value:Bool):Bool {
+		//Console.log("setting " + this + ".active = " + value);
 		if (value != _active) {
 			//Console.log("setting target active to " + value + " for " + this);
 			return _active = visible = value;
@@ -151,7 +152,7 @@ class UIComponent implements IEventDispatcher
 	}
 	function setIncludeInLayout(value:Bool):Bool {
 		//Console.log("setting includeInLayout to " + value + " for " + this);
-		return _includeInLayout = setActive(value);
+		return _includeInLayout = value;
 	}
 	
 	var _ready:Signal0;
@@ -180,6 +181,8 @@ class UIComponent implements IEventDispatcher
 		_dirty = true;
 		_sprite = new Sprite();
 		_sprite.name = Type.getClassName(Type.getClass(this));
+		_active = true;
+		_includeInLayout = true;
 		
 		initialize();
 	}
