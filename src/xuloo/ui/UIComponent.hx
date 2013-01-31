@@ -273,13 +273,19 @@ class UIComponent implements IEventDispatcher
 	public function render():Void {
 
 
+
 		if (!_pluginsResolved) {
+
+			Console.log("rendering '" + this + "'");
+
 			for (plugin in _plugins) {
 				plugin.resolve(this);
 			}
+
+			_pluginsResolved = true;
 		}
 
-		_pluginsResolved = true;
+		
 		
 	}
 	
