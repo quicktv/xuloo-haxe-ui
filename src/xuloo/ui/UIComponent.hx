@@ -185,6 +185,8 @@ class UIComponent implements IEventDispatcher
 		_includeInLayout = true;
 		
 		initialize();
+
+		_pluginsResolved = false;
 	}
 	
 	public function post():Void {
