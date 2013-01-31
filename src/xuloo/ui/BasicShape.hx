@@ -188,11 +188,10 @@ class BasicShape extends UIComponent
 			
 			if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 				_renderer.render(surface, new Rectangle(0, 0, _w, _h));
+				_backgroundSpriteRendered = true;
 			}
 			
 			surface.endFill();
-
-			_backgroundSpriteRendered = true;
 		}
 	}
 	
@@ -206,11 +205,10 @@ class BasicShape extends UIComponent
 			
 			if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 				_renderer.render(surface, new Rectangle(1, 1, _w - 2, _h - 2));
+				_borderSpriteRendered = true;
 			}
 			
 			surface.endFill();
-
-			_borderSpriteRendered = true;
 		}
 		
 	}
