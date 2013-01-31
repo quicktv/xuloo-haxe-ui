@@ -9,9 +9,9 @@ class BasicShape extends UIComponent
 {
 	var _renderer:IShapeRenderer;
 
-	var _backgroundSpriteRendered:Bool;
+	var _forceBackgroundSpriteRender:Bool;
 	
-	var _borderSpriteRendered:Bool;
+	var _forceBorderSpriteRender:Bool;
 
 	public var backgroundSprite(getBackgroundSprite, never):Sprite;
 	
@@ -31,6 +31,8 @@ class BasicShape extends UIComponent
 	public override function setWidth(value:Float):Float {
 		super.setWidth(_w =  value);
 
+		_forceBackgroundSpriteRender = _forceBorderSpriteRender = true;
+
 		render();
 
 		return _w;
@@ -39,6 +41,8 @@ class BasicShape extends UIComponent
 	var _h:Float;	
 	public override function setHeight(value:Float):Float {
 		super.setHeight(_h = value);
+
+		_forceBackgroundSpriteRender = _forceBorderSpriteRender = true;
 
 		render();
 
@@ -167,8 +171,8 @@ class BasicShape extends UIComponent
 		_backgroundSprite = new Sprite();
 		_backgroundSprite.name = "Background Sprite";
 
-		_backgroundSpriteRendered = false;
-		_borderSpriteRendered = false;
+		_forceBackgroundSpriteRender = false;
+		_forceBorderSpriteRender = false;
 		
 		shape = Constants.RECTANGLE;
 		width = 200;
@@ -179,7 +183,7 @@ class BasicShape extends UIComponent
 	}
 	
 	public function drawBackgroundSprite():Void {
-		if (!_backgroundSpriteRendered) {
+		if (_forceBackgroundSpriteRender) {
 			var surface:Graphics = _backgroundSprite.graphics;
 			
 			surface.clear();
@@ -188,15 +192,16 @@ class BasicShape extends UIComponent
 			
 			if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 				_renderer.render(surface, new Rectangle(0, 0, _w, _h));
-				_backgroundSpriteRendered = true;
 			}
 			
 			surface.endFill();
+
+			_forceBackgroundSpriteRender = false;
 		}
 	}
 	
 	public function drawBorderSprite():Void {
-		if (!_borderSpriteRendered) {
+		if (_forceBorderSpriteRender) {
 			var surface:Graphics = _borderSprite.graphics;
 
 			surface.clear();
@@ -205,10 +210,11 @@ class BasicShape extends UIComponent
 			
 			if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
 				_renderer.render(surface, new Rectangle(1, 1, _w - 2, _h - 2));
-				_borderSpriteRendered = true;
 			}
 			
 			surface.endFill();
+
+			_forceBorderSpriteRender = false;
 		}
 		
 	}
