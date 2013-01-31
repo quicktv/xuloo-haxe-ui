@@ -265,14 +265,22 @@ class UIComponent implements IEventDispatcher
 
 	}
 
+	var _pluginsResolved:Bool;
+
 	/**
 	Updates platform specific properties and state
 	*/
 	public function render():Void {
 
-		for (plugin in _plugins) {
-			plugin.resolve(this);
+
+		if (!_pluginsResolved) {
+			for (plugin in _plugins) {
+				plugin.resolve(this);
+			}
 		}
+
+		_pluginsResolved = true;
+		
 	}
 	
 	public function toString():String {
