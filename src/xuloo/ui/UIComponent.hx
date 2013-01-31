@@ -186,7 +186,7 @@ class UIComponent implements IEventDispatcher
 		
 		initialize();
 
-		_pluginsResolved = false;
+		//_pluginsResolved = false;
 	}
 	
 	public function post():Void {
