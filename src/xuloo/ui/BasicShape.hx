@@ -191,6 +191,8 @@ class BasicShape extends UIComponent
 			}
 			
 			surface.endFill();
+
+			_backgroundSpriteRendered = true;
 		}
 	}
 	
@@ -207,6 +209,8 @@ class BasicShape extends UIComponent
 			}
 			
 			surface.endFill();
+
+			_borderSpriteRendered = true;
 		}
 		
 	}
