@@ -267,7 +267,7 @@ class UIComponent implements IEventDispatcher
 
 	}
 
-	var _pluginsResolved:Bool;
+	//var _pluginsResolved:Bool;
 
 	/**
 	Updates platform specific properties and state
@@ -276,16 +276,16 @@ class UIComponent implements IEventDispatcher
 
 
 
-		if (!_pluginsResolved) {
+		//if (!_pluginsResolved) {
 
-			Console.log("rendering '" + this + "'");
+			//Console.log("rendering '" + this + "'");
 
 			for (plugin in _plugins) {
 				plugin.resolve(this);
 			}
 
-			_pluginsResolved = true;
-		}
+			//_pluginsResolved = true;
+		//}
 
 		
 		

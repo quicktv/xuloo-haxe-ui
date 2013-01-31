@@ -8,7 +8,11 @@ import flash.geom.Rectangle;
 class BasicShape extends UIComponent
 {
 	var _renderer:IShapeRenderer;
+
+	var _backgroundSpriteRenderer:Bool;
 	
+	var _borderSpriteRendered:Bool;
+
 	public var backgroundSprite(getBackgroundSprite, never):Sprite;
 	
 	var _backgroundSprite:Sprite;
@@ -162,6 +166,9 @@ class BasicShape extends UIComponent
 		_borderSprite.name = "Border Sprite";
 		_backgroundSprite = new Sprite();
 		_backgroundSprite.name = "Background Sprite";
+
+		_backgroundSpriteRendered = false;
+		_borderSpriteRendered = false;
 		
 		shape = Constants.RECTANGLE;
 		width = 200;
@@ -172,30 +179,35 @@ class BasicShape extends UIComponent
 	}
 	
 	public function drawBackgroundSprite():Void {
-		var surface:Graphics = _backgroundSprite.graphics;
+		if (!_backgroundSpriteRendered) {
+			var surface:Graphics = _backgroundSprite.graphics;
 			
-		surface.clear();
-		surface.lineStyle();
-		surface.beginFill(cast(_backgroundColour, Int));
-		
-		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
-			_renderer.render(surface, new Rectangle(0, 0, _w, _h));
+			surface.clear();
+			surface.lineStyle();
+			surface.beginFill(cast(_backgroundColour, Int));
+			
+			if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
+				_renderer.render(surface, new Rectangle(0, 0, _w, _h));
+			}
+			
+			surface.endFill();
 		}
-		
-		surface.endFill();
 	}
 	
 	public function drawBorderSprite():Void {
-		var surface:Graphics = _borderSprite.graphics;
+		if (!_borderSpriteRendered) {
+			var surface:Graphics = _borderSprite.graphics;
 
-		surface.clear();
-		surface.lineStyle(_borderThickness, cast(_borderColour, Int));
-		surface.beginFill(0, 0);
-		
-		if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
-			_renderer.render(surface, new Rectangle(1, 1, _w - 2, _h - 2));
+			surface.clear();
+			surface.lineStyle(_borderThickness, cast(_borderColour, Int));
+			surface.beginFill(0, 0);
+			
+			if (!Math.isNaN(_w) && _w > 0 && !Math.isNaN(_h) && _h > 0) {
+				_renderer.render(surface, new Rectangle(1, 1, _w - 2, _h - 2));
+			}
+			
+			surface.endFill();
 		}
 		
-		surface.endFill();
 	}
 }
