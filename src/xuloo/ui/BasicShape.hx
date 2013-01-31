@@ -9,7 +9,7 @@ class BasicShape extends UIComponent
 {
 	var _renderer:IShapeRenderer;
 
-	var _backgroundSpriteRenderer:Bool;
+	var _backgroundSpriteRendered:Bool;
 	
 	var _borderSpriteRendered:Bool;
 
