@@ -104,11 +104,10 @@ class BasicImage extends UIComponent {
 	}
 
 	function handleLoadError(evt : IOErrorEvent) : Void {
-		Console.log("image load error " + evt);
+		#if preview Console.log("image load error " + evt); #end
 	}
 
 	function handleLoadStatus(evt : HTTPStatusEvent) : Void {
-		Console.log("image load status " + evt.status);
 		if(evt.status != 200) { }
 	}
 
@@ -142,7 +141,7 @@ class BasicImage extends UIComponent {
 	}
 
 	function invalidateDimensions() : Void {
-		Console.log("invalidating dimensions");
+		#if preview Console.log("invalidating dimensions"); #end
 		/*CONFIG::debug {
 		logger.debug("invalidating dimensions {0} {1}x{2}", [image, _width, _height]);
 		}*/
@@ -155,7 +154,7 @@ class BasicImage extends UIComponent {
 				_source.height = _height;
 			}
 		}
-		Console.log(image + " " + _width + " " + _height + " " + width + " " + height);
+		#if preview Console.log(image + " " + _width + " " + _height + " " + width + " " + height); #end
 		if(image != null)  {
 			if(!Math.isNaN(_width) && !Math.isNaN(_height))  {
 				var matrix : Matrix = new Matrix();
@@ -185,7 +184,7 @@ class BasicImage extends UIComponent {
 	}
 
 	function doSetSource(value : Dynamic) : Void {
-		Console.log("setting image source " + value);
+		#if preview Console.log("setting image source " + value); #end
 		if(Std.is(value, String))  {
 			_source = value;
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoadComplete, false, 0, true);

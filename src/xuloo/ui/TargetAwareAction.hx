@@ -6,7 +6,6 @@ class TargetAwareAction extends Action {
 	
 	var _target:String;
 	public function setTarget(value:String):String {
-		Console.log("setting target " + value);
 		return _target = value;
 	}
 	
@@ -15,7 +14,6 @@ class TargetAwareAction extends Action {
 		if (_targetComponent == null) {
 			_targetComponent = interactiveLayer.getComponentByName(_target);
 		}
-		Console.log("getting target '" + _target + "' " + _targetComponent);
 		return _targetComponent;
 	}
 

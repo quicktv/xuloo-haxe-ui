@@ -68,6 +68,6 @@ class Image extends UIComponent
 	}
 	
 	private function onResize(e:Event) {
-		Console.log("on resize");
+		#if preview Console.log("on resize"); #end
 	}
 }

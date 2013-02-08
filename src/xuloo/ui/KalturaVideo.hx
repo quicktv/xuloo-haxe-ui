@@ -220,6 +220,6 @@ class KalturaVideo extends UIComponent
 	}
 	
 	function onResize(e:Event):Void {
-		Console.log("resizing");
+		#if preview Console.log("resizing"); #end
 	}
 }

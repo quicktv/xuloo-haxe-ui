@@ -16,8 +16,7 @@ class ActionList {
 	}
 	
 	public function addAction(action:Action):Void {
-		Console.log("pushing " + action + " into " + actions);
-		_actions.push(action);
+		actions.push(action);
 	}
 
 	public function toString():String {

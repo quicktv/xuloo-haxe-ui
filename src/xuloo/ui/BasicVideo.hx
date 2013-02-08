@@ -71,10 +71,10 @@ class BasicVideo extends BasicShape {
 		_player.init();
 
 		if (_player.isReady)  {
-			Console.log("video is already ready");
+			#if preview Console.log("video is already ready"); #end
 			onPlayerReady();
 		} else {
-			Console.log("video not ready - adding a listener");
+			#if preview Console.log("video not ready - adding a listener"); #end
 			_player.ready.add(onPlayerReady);
 		}
 		
@@ -113,7 +113,7 @@ class BasicVideo extends BasicShape {
 				playerWidth = _h * _aspectRatio;
 			}
 			
-			Console.log(_player + " " + _w + " " + _h + " " + _aspectRatio + " " + playerWidth + " " + playerHeight);
+			#if preview Console.log(_player + " " + _w + " " + _h + " " + _aspectRatio + " " + playerWidth + " " + playerHeight); #end
 
 			videoDisplay.x = (_w - playerWidth) / 2;
 			videoDisplay.y = (_h - playerHeight) / 2;
@@ -121,7 +121,7 @@ class BasicVideo extends BasicShape {
 			_player.setWidth(playerWidth);
 			_player.setHeight(playerHeight);
 
-			Console.log("resulting dimensions " + width + " " + height + " " + videoDisplay.width + " " + videoDisplay.height);
+			#if preview Console.log("resulting dimensions " + width + " " + height + " " + videoDisplay.width + " " + videoDisplay.height); #end
 		}
 	}
 

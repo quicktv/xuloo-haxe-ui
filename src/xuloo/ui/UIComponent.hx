@@ -230,7 +230,7 @@ class UIComponent implements IEventDispatcher
 			//Console.log("handling '" + e.type + "' event");
 			triggerActions(e.type);
 		} else {
-			Console.log("not handling event '" + e.type + "' component is NOT active");
+			#if preview Console.log("not handling event '" + e.type + "' component is NOT active"); #end
 		}
 	}
 	

@@ -33,7 +33,6 @@ class TextField extends UIComponent
 	
 	override function initialize()
 	{
-		Console.log("initialising text component");
 		#if flash
 		super.initialize();
 		#elseif js
