@@ -68,6 +68,15 @@ class UIComponent implements IEventDispatcher
 	public function getY():Float { return _sprite.y; }
 	public function setY(value:Float):Float { return _sprite.y = value; }
 	
+	//added by Jash
+	public var scaleX (getScaleX, setScaleX):Float;
+	public function getScaleX():Float { return _sprite.scaleX; }
+	public function setScaleX(value:Float):Float { return _sprite.scaleX = value; }
+	
+	public var scaleY (getScaleY, setScaleY):Float;
+	public function getScaleY():Float { return _sprite.scaleY; }
+	public function setScaleY(value:Float):Float { return _sprite.scaleY = value; }
+	
 	public var visible(getVisible, setVisible):Bool;
 	public function getVisible():Bool { return _sprite.visible; }
 	public function setVisible(value:Bool):Bool { return _sprite.visible = value; }

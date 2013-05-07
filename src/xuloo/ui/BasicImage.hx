@@ -11,13 +11,10 @@ import flash.events.MouseEvent;
 import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import flash.net.URLRequest;
-#if flash
 import flash.system.ApplicationDomain;
 import flash.system.LoaderContext;
 import flash.system.Security;
-#elseif js
-import jeash.system.Security;
-#end
+
 import qtv.operations.api.IOperation;
 
 class BasicImage extends UIComponent {
