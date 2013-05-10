@@ -11,9 +11,11 @@ import flash.events.MouseEvent;
 import flash.geom.Matrix;
 import flash.geom.Rectangle;
 import flash.net.URLRequest;
+#if flash
 import flash.system.ApplicationDomain;
 import flash.system.LoaderContext;
 import flash.system.Security;
+#end
 
 import qtv.operations.api.IOperation;
 
@@ -64,7 +66,7 @@ class BasicImage extends UIComponent {
 		_target = "_blank";
 		//_tooltipArea = new ToolTip();
 		originalDimensions = new Rectangle();
-		Security.allowDomain("*");
+		#if flash Security.allowDomain("*"); #end
 		loader = new Loader();
 	}
 
